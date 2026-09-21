@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras | B-Max Impresión 3D</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            header: '#EFEAE4',
+                            beige: '#EEE9E3',
+                            features: '#F4F1EC',
+                            card: '#FFFFFF',
+                            tan: '#CFAD91',
+                            tanhover: '#C29E80',
+                            aboutcard: '#F6F2EC',
+                            ctabg: '#4A3D34',
+                            footer: '#F3EEEA',
+                            dark: '#2B221B',
+                            text: '#2F2620',
+                            subtext: '#766B63',
+                            border: '#E3DDD5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-brand-text bg-brand-beige antialiased selection:bg-brand-tan selection:text-brand-dark min-h-screen flex flex-col justify-between">
+
+    <!-- ==========================================
+         HEADER / NAVEGACIÓN
+         ========================================== -->
+    <header class="w-full bg-brand-header sticky top-0 z-50 shadow-sm/5">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            
+            <div class="shrink-0 flex items-center gap-3">
+                <button id="btn-mobile-menu" aria-label="Menú móvil" class="lg:hidden p-1 text-brand-dark hover:text-brand-tan">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[21px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Menú Central -->
+            <nav class="hidden lg:flex items-center gap-8 xl:gap-10 text-[11px] font-semibold tracking-[0.14em] text-brand-subtext uppercase">
+                <a href="index.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">INICIO</a>
+                <a href="productos.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">PRODUCTOS</a>
+                <a href="personalizados.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">PERSONALIZADOS</a>
+                <a href="nosotros.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">SOBRE NOSOTROS</a>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">CONTACTO</a>
+            </nav>
+
+            <!-- Acciones -->
+            <div class="shrink-0 flex items-center gap-5 text-brand-dark">
+                <button type="button" aria-label="Buscar" class="btn-search p-1 hover:text-brand-tan transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path stroke-linecap="round" d="M16.5 16.5L21 21"></path>
+                    </svg>
+                </button>
+                <a href="carrito.html" aria-label="Carrito de compras" class="p-1 text-brand-dark hover:text-brand-tan transition-colors relative flex items-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l1.6 8.5a2 2 0 002 1.5h8.8a2 2 0 001.9-1.4l1.7-6.6H5.5"></path>
+                        <circle cx="9.5" cy="18.5" r="1.5"></circle>
+                        <circle cx="16.5" cy="18.5" r="1.5"></circle>
+                    </svg>
+                    <span class="cart-badge bg-brand-dark text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center absolute -top-1.5 -right-2">0</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-header border-t border-brand-border/60 px-6 py-4 flex flex-col gap-3 text-xs font-semibold tracking-wider uppercase text-brand-subtext">
+            <a href="index.html" class="hover:text-brand-dark py-1">Inicio</a>
+            <a href="productos.html" class="hover:text-brand-dark py-1">Productos</a>
+            <a href="personalizados.html" class="hover:text-brand-dark py-1">Personalizados</a>
+            <a href="nosotros.html" class="hover:text-brand-dark py-1">Sobre Nosotros</a>
+            <a href="contacto.html" class="hover:text-brand-dark py-1">Contacto</a>
+            <a href="carrito.html" class="text-brand-dark py-1 font-bold">Mi Carrito</a>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         SECCIÓN PRINCIPAL DEL CARRITO
+         ========================================== -->
+    <main class="max-w-[1360px] mx-auto px-6 lg:px-12 py-10 lg:py-16 w-full flex-grow">
+        
+        <div class="flex items-center gap-2 text-xs text-brand-subtext mb-4">
+            <a href="index.html" class="hover:text-brand-dark transition-colors">Inicio</a>
+            <span>/</span>
+            <a href="productos.html" class="hover:text-brand-dark transition-colors">Productos</a>
+            <span>/</span>
+            <span class="text-brand-dark font-medium">Carrito</span>
+        </div>
+
+        <h1 class="text-3xl lg:text-4xl font-light text-brand-dark tracking-tight mb-8">
+            Tu Carrito de Compras
+        </h1>
+
+        <!-- Contenedor del Carrito con Productos -->
+        <div id="cart-content" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            
+            <!-- Lista de Artículos (8 columnas en desktop) -->
+            <div class="lg:col-span-8 space-y-4">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-brand-border/50">
+                    <div class="flex justify-between items-center pb-4 border-b border-brand-border/50 mb-4">
+                        <span class="text-xs font-bold uppercase tracking-wider text-brand-subtext">Artículos seleccionados</span>
+                        <button onclick="clearCart()" class="text-xs text-red-500 hover:text-red-700 underline font-medium">
+                            Vaciar carrito
+                        </button>
+                    </div>
+
+                    <!-- Items renderizados dinámicamente -->
+                    <div id="cart-items-container" class="divide-y divide-brand-border/40">
+                        <!-- JS inserta los items aquí -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center pt-2">
+                    <a href="productos.html" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-dark hover:text-brand-tan transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        <span>Seguir Explorando Productos</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Resumen de Compra (4 columnas en desktop) -->
+            <div class="lg:col-span-4 bg-white rounded-2xl p-6 shadow-sm border border-brand-border/50 sticky top-24">
+                <h3 class="text-base font-bold text-brand-dark pb-4 border-b border-brand-border/50 mb-4">
+                    Resumen del Pedido
+                </h3>
+
+                <div class="space-y-3 text-xs text-brand-subtext mb-5">
+                    <div class="flex justify-between">
+                        <span>Subtotal de productos:</span>
+                        <span id="summary-subtotal" class="font-bold text-brand-dark">$0</span>
+                    </div>
+
+                    <div class="py-2 border-t border-b border-brand-border/40 space-y-2">
+                        <label class="block font-semibold text-brand-dark">Método de entrega:</label>
+                        <div class="space-y-1.5">
+                            <label class="flex items-center justify-between p-2 rounded-lg border border-brand-border/60 hover:bg-brand-beige/30 cursor-pointer">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="shipping" value="4500" checked onchange="updateCartTotals()" class="accent-brand-tan" />
+                                    <span>Envío a domicilio (País)</span>
+                                </div>
+                                <span class="font-bold text-brand-dark">$4.500</span>
+                            </label>
+                            <label class="flex items-center justify-between p-2 rounded-lg border border-brand-border/60 hover:bg-brand-beige/30 cursor-pointer">
+                                <div class="flex items-center gap-2">
+                                    <input type="radio" name="shipping" value="0" onchange="updateCartTotals()" class="accent-brand-tan" />
+                                    <span>Retiro en taller</span>
+                                </div>
+                                <span class="font-bold text-green-600">Gratis</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between text-sm font-bold text-brand-dark pt-2">
+                        <span>Total estimado:</span>
+                        <span id="summary-total" class="text-lg text-brand-dark">$0</span>
+                    </div>
+                </div>
+
+                <!-- Botón de WhatsApp Checkout -->
+                <button onclick="checkoutViaWhatsApp()" class="w-full bg-[#25D366] hover:bg-[#20ba59] text-white font-bold py-3.5 px-4 rounded-full text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg mb-3">
+                    <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                        <path d="M12.031 0C5.397 0 .017 5.38.017 12.015c0 2.118.552 4.184 1.6 6.002L0 24l6.155-1.614a11.96 11.96 0 005.876 1.528h.005c6.633 0 12.013-5.38 12.013-12.015 0-3.208-1.25-6.224-3.52-8.495A11.936 11.936 0 0012.031 0zm0 22.012h-.004a9.98 9.98 0 01-5.088-1.39l-.365-.216-3.778.99.998-3.684-.238-.378a9.96 9.96 0 01-1.528-5.319c0-5.518 4.49-10.008 10.008-10.008 2.673 0 5.185 1.04 7.075 2.93 1.89 1.89 2.93 4.403 2.93 7.076 0 5.519-4.49 10.009-10.008 10.009zm5.485-7.493c-.3-.15-1.777-.876-2.052-.976-.275-.1-.475-.15-.675.15s-.775.976-.95 1.176c-.175.2-.35.225-.65.075s-1.267-.467-2.414-1.49c-.893-.796-1.496-1.78-1.67-2.08-.176-.3-.019-.462.13-.612.136-.135.3-.35.45-.525.15-.175.2-.3.3-.5.1-.2.05-.375-.025-.525s-.675-1.625-.925-2.225c-.244-.585-.492-.505-.675-.515-.175-.009-.375-.009-.575-.009s-.525.075-.8.375c-.275.3-1.05 1.025-1.05 2.5s1.075 2.9 1.225 3.1c.15.2 2.116 3.23 5.125 4.53 1.942.84 2.75.9 3.842.76 1.05-.133 2.05-.838 2.34-1.65.29-.812.29-1.512.2-1.662-.087-.15-.287-.25-.587-.4z"/>
+                    </svg>
+                    <span>Finalizar Pedido por WhatsApp</span>
+                </button>
+
+                <p class="text-[10px] text-center text-brand-subtext leading-tight">
+                    Al confirmar, coordinaremos los detalles de color, personalización y forma de pago directo con vos.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Vista de Carrito Vacío -->
+        <div id="cart-empty" class="hidden text-center py-20 bg-white rounded-3xl border border-brand-border/60 p-8 max-w-xl mx-auto">
+            <div class="w-20 h-20 bg-brand-beige rounded-full flex items-center justify-center mx-auto mb-5 text-brand-dark">
+                <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l1.6 8.5a2 2 0 002 1.5h8.8a2 2 0 001.9-1.4l1.7-6.6H5.5"></path>
+                    <circle cx="9.5" cy="18.5" r="1.5"></circle>
+                    <circle cx="16.5" cy="18.5" r="1.5"></circle>
+                </svg>
+            </div>
+            <h2 class="text-2xl font-light text-brand-dark mb-2">Tu carrito está vacío</h2>
+            <p class="text-xs text-brand-subtext mb-8 max-w-sm mx-auto leading-relaxed">
+                Aún no has agregado ninguna pieza a tu orden. Descubrí nuestras creaciones impresas en 3D y personalizá tu espacio.
+            </p>
+            <a href="productos.html" class="inline-flex items-center gap-3 bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-semibold px-8 py-3.5 rounded-full text-xs uppercase tracking-wider transition-all shadow-sm">
+                <span>Ver Catálogo de Productos</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+
+    </main>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+        <!-- ==========================================
+         FOOTER / PIE DE PÁGINA
+         ========================================== -->
+        <!-- ==========================================
+         FOOTER / PIE DE PÁGINA
+         ========================================== -->
+    <footer class="bg-brand-footer py-10 border-t border-brand-border/60">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Logo Footer (Izquierda) -->
+            <div class="shrink-0">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[20px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Redes Sociales Oficiales (Centro) -->
+            <div class="flex items-center gap-5 text-brand-dark opacity-85">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/baymax.3d" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/instagram_ico.png" alt="Instagram" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <!-- Facebook -->
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/facebook_ico.png" alt="Facebook" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <!-- WhatsApp -->
+                <a href="https://wa.me/5492622527982?text=Hola%20B-Max!%20Tengo%20una%20consulta" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/whatsapp_ico.png" alt="WhatsApp" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <!-- YouTube -->
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/youtube_ico.png" alt="YouTube" class="w-[19px] h-[19px] object-contain" />
+                </a>
+            </div>
+
+            <!-- Leyenda y Enlaces Rápidos (Derecha) -->
+            <div class="shrink-0 flex flex-wrap items-center justify-center gap-3 text-[10.5px] font-medium tracking-[0.12em] text-brand-subtext uppercase">
+                <a href="productos.html" class="hover:text-brand-dark transition-colors">Diseño</a>
+                <span class="text-brand-border">/</span>
+                <a href="personalizados.html" class="hover:text-brand-dark transition-colors">Funcionalidad</a>
+                <span class="text-brand-border">/</span>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors">Personalización</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/app.js"></script>
+    <script src="assets/products.js"></script>
+    <script>
+        function renderCartPage() {
+            const cart = getCart();
+            const contentEl = document.getElementById('cart-content');
+            const emptyEl = document.getElementById('cart-empty');
+            const container = document.getElementById('cart-items-container');
+
+            if (!cart || cart.length === 0) {
+                contentEl.classList.add('hidden');
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+
+            contentEl.classList.remove('hidden');
+            emptyEl.classList.add('hidden');
+
+            container.innerHTML = cart.map(item => `
+                <div class="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 w-full sm:w-auto">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-brand-beige shrink-0" />
+                        <div>
+                            <span class="text-[9px] font-bold tracking-wider text-brand-subtext uppercase">${item.category || 'Producto'}</span>
+                            <h4 class="text-sm font-semibold text-brand-dark">${item.name}</h4>
+                            <span class="text-xs font-medium text-brand-subtext">${formatPrice(item.price)} c/u</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full sm:w-auto gap-6">
+                        <!-- Selector Cantidad -->
+                        <div class="flex items-center border border-brand-border rounded-full bg-white px-2.5 py-1">
+                            <button onclick="updateCartQuantity('${item.id}', -1)" class="text-brand-dark hover:text-brand-tan px-2 font-bold text-xs">-</button>
+                            <span class="px-2 text-xs font-semibold min-w-[20px] text-center">${item.quantity}</span>
+                            <button onclick="updateCartQuantity('${item.id}', 1)" class="text-brand-dark hover:text-brand-tan px-2 font-bold text-xs">+</button>
+                        </div>
+
+                        <!-- Subtotal Producto -->
+                        <div class="text-sm font-bold text-brand-dark min-w-[70px] text-right">
+                            ${formatPrice(item.price * item.quantity)}
+                        </div>
+
+                        <!-- Botón Eliminar -->
+                        <button onclick="removeFromCart('${item.id}')" class="text-gray-400 hover:text-red-500 transition-colors p-1" title="Eliminar">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            updateCartTotals();
+        }
+
+        function updateCartTotals() {
+            const cart = getCart();
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            
+            const shippingRadio = document.querySelector('input[name="shipping"]:checked');
+            const shippingCost = shippingRadio ? Number(shippingRadio.value) : 0;
+            const total = subtotal + shippingCost;
+
+            document.getElementById('summary-subtotal').textContent = formatPrice(subtotal);
+            document.getElementById('summary-total').textContent = formatPrice(total);
+        }
+
+        function checkoutViaWhatsApp() {
+            const cart = getCart();
+            if (cart.length === 0) return;
+
+            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            const shippingRadio = document.querySelector('input[name="shipping"]:checked');
+            const shippingCost = shippingRadio ? Number(shippingRadio.value) : 0;
+            const shippingType = shippingCost > 0 ? 'Envío a domicilio' : 'Retiro en taller';
+            const total = subtotal + shippingCost;
+
+            let msg = `*¡Hola B-Max Impresión 3D! Quisiera confirmar este pedido:*\n\n`;
+            cart.forEach((item, index) => {
+                msg += `${index + 1}. *${item.name}* x ${item.quantity}u - ${formatPrice(item.price * item.quantity)}\n`;
+            });
+
+            msg += `\n*Entrega:* ${shippingType} (${shippingCost > 0 ? formatPrice(shippingCost) : 'Gratis'})`;
+            msg += `\n*TOTAL:* ${formatPrice(total)}`;
+            msg += `\n\n¿Podrían indicarme los pasos para el pago y tiempos de entrega? ¡Gracias!`;
+
+            const phone = "5492622527982"; // Número oficial B-Max
+            const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            window.open(url, '_blank');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCartPage();
+        });
+    </script>
+</body>
+</html>

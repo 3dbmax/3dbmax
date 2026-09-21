@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizados | B-Max Impresión 3D</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            header: '#EFEAE4',
+                            beige: '#EEE9E3',
+                            features: '#F4F1EC',
+                            card: '#FFFFFF',
+                            tan: '#CFAD91',
+                            tanhover: '#C29E80',
+                            aboutcard: '#F6F2EC',
+                            ctabg: '#4A3D34',
+                            footer: '#F3EEEA',
+                            dark: '#2B221B',
+                            text: '#2F2620',
+                            subtext: '#766B63',
+                            border: '#E3DDD5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        script: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans text-brand-text bg-brand-beige antialiased selection:bg-brand-tan selection:text-brand-dark">
+
+    <!-- ==========================================
+         HEADER / NAVEGACIÓN
+         ========================================== -->
+    <header class="w-full bg-brand-header sticky top-0 z-50 shadow-sm/5">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            
+            <div class="shrink-0 flex items-center gap-3">
+                <button id="btn-mobile-menu" aria-label="Menú móvil" class="lg:hidden p-1 text-brand-dark hover:text-brand-tan">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[21px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Menú Central -->
+            <nav class="hidden lg:flex items-center gap-8 xl:gap-10 text-[11px] font-semibold tracking-[0.14em] text-brand-subtext uppercase">
+                <a href="index.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">INICIO</a>
+                <a href="productos.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">PRODUCTOS</a>
+                <a href="personalizados.html" class="text-brand-dark flex flex-col items-center pt-2 transition-colors whitespace-nowrap">
+                    PERSONALIZADOS
+                    <span class="w-6 h-[2px] bg-brand-dark block rounded-full mt-1.5"></span>
+                </a>
+                <a href="nosotros.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">SOBRE NOSOTROS</a>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">CONTACTO</a>
+            </nav>
+
+            <!-- Acciones -->
+            <div class="shrink-0 flex items-center gap-5 text-brand-dark">
+                <button type="button" aria-label="Buscar" class="btn-search p-1 hover:text-brand-tan transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path stroke-linecap="round" d="M16.5 16.5L21 21"></path>
+                    </svg>
+                </button>
+                <a href="carrito.html" aria-label="Carrito de compras" class="p-1 hover:text-brand-tan transition-colors relative flex items-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l1.6 8.5a2 2 0 002 1.5h8.8a2 2 0 001.9-1.4l1.7-6.6H5.5"></path>
+                        <circle cx="9.5" cy="18.5" r="1.5"></circle>
+                        <circle cx="16.5" cy="18.5" r="1.5"></circle>
+                    </svg>
+                    <span class="cart-badge hidden absolute -top-1.5 -right-2 bg-brand-dark text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-header border-t border-brand-border/60 px-6 py-4 flex flex-col gap-3 text-xs font-semibold tracking-wider uppercase text-brand-subtext">
+            <a href="index.html" class="hover:text-brand-dark py-1">Inicio</a>
+            <a href="productos.html" class="hover:text-brand-dark py-1">Productos</a>
+            <a href="personalizados.html" class="text-brand-dark py-1 font-bold">Personalizados</a>
+            <a href="nosotros.html" class="hover:text-brand-dark py-1">Sobre Nosotros</a>
+            <a href="contacto.html" class="hover:text-brand-dark py-1">Contacto</a>
+            <a href="carrito.html" class="hover:text-brand-dark py-1 flex items-center justify-between text-brand-tan font-bold">
+                <span>Mi Carrito</span>
+                <span class="cart-badge bg-brand-dark text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         HERO BANNER
+         ========================================== -->
+    <section class="bg-brand-header border-b border-brand-border/50 py-12 lg:py-16">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            <div class="flex items-center gap-2 text-xs text-brand-subtext mb-3">
+                <a href="index.html" class="hover:text-brand-dark transition-colors">Inicio</a>
+                <span>/</span>
+                <span class="text-brand-dark font-medium">Personalizados</span>
+            </div>
+            <div class="max-w-2xl">
+                <span class="text-[11px] font-bold tracking-[0.22em] text-brand-subtext uppercase mb-2 block">Servicio a medida</span>
+                <h1 class="text-3xl lg:text-5xl font-light text-brand-dark tracking-tight leading-tight mb-4">
+                    Tu idea, nuestro diseño
+                </h1>
+                <p class="text-sm lg:text-base text-brand-subtext font-light leading-relaxed">
+                    Convertimos tus bocetos, logotipos de marca o archivos 3D en objetos tangibles con la más alta precisión y acabado artesanal.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         PASO A PASO DEL PROCESO
+         ========================================== -->
+    <section class="py-16 lg:py-20 border-b border-brand-border/60">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            <div class="text-center max-w-xl mx-auto mb-14">
+                <h2 class="text-[11px] font-semibold tracking-[0.24em] text-brand-subtext uppercase mb-2">¿Cómo trabajamos?</h2>
+                <h3 class="text-3xl font-light text-brand-dark tracking-tight">De tu mente a la realidad en 3 pasos</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Paso 1 -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-sm border border-brand-border/50 relative">
+                    <div class="w-12 h-12 bg-brand-beige rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand-dark font-bold text-base">
+                        01
+                    </div>
+                    <h4 class="text-sm font-bold tracking-wider uppercase text-brand-dark mb-2">Compartinos tu idea</h4>
+                    <p class="text-xs text-brand-subtext leading-relaxed font-light">
+                        Envianos una foto, dibujo, plano con medidas o archivo STL/OBJ. Te asesoramos sobre el mejor material y factibilidad de impresión.
+                    </p>
+                </div>
+
+                <!-- Paso 2 -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-sm border border-brand-border/50 relative">
+                    <div class="w-12 h-12 bg-brand-tan/30 rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand-dark font-bold text-base">
+                        02
+                    </div>
+                    <h4 class="text-sm font-bold tracking-wider uppercase text-brand-dark mb-2">Modelado y Cotización</h4>
+                    <p class="text-xs text-brand-subtext leading-relaxed font-light">
+                        Preparamos el modelo digital en 3D, evaluamos tiempos y peso de filamento, y te enviamos una cotización transparente sin compromiso.
+                    </p>
+                </div>
+
+                <!-- Paso 3 -->
+                <div class="bg-white rounded-2xl p-8 text-center shadow-sm border border-brand-border/50 relative">
+                    <div class="w-12 h-12 bg-brand-beige rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand-dark font-bold text-base">
+                        03
+                    </div>
+                    <h4 class="text-sm font-bold tracking-wider uppercase text-brand-dark mb-2">Impresión y Envío</h4>
+                    <p class="text-xs text-brand-subtext leading-relaxed font-light">
+                        Fabricamos tu pieza con meticulosidad, realizamos control de calidad y la despachamos embalada de forma segura a cualquier punto del país.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FORMULARIO DE COTIZACIÓN
+         ========================================== -->
+    <section class="py-16 lg:py-20">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            <div class="bg-white rounded-3xl p-8 md:p-14 shadow-sm border border-brand-border/60 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <!-- Columna Izquierda: Información -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div>
+                        <span class="text-[10px] font-bold tracking-[0.24em] text-brand-subtext uppercase">Cotización online</span>
+                        <h2 class="text-3xl font-light text-brand-dark mt-1 tracking-tight">Contanos sobre tu proyecto</h2>
+                        <p class="text-xs text-brand-subtext leading-relaxed mt-3 font-light">
+                            Completá el formulario para recibir un presupuesto personalizado en menos de 24 horas hábiles.
+                        </p>
+                    </div>
+
+                    <div class="space-y-4 text-xs text-brand-subtext">
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-tan shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            <span>Atención tanto a pedidos unitarios como a grandes lotes corporativos.</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-tan shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            <span>Materiales técnicos resistentes (PETG, ABS) y estéticos ecológicos (PLA Seda, Mármol).</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <svg class="w-5 h-5 text-brand-tan shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+                            <span>Asesoramiento directo vía correo electrónico o WhatsApp durante todo el proceso.</span>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-brand-beige/50 rounded-2xl border border-brand-border/60">
+                        <span class="text-xs font-bold text-brand-dark block mb-1">¿Tenés tu archivo STL listo?</span>
+                        <p class="text-[11px] text-brand-subtext">
+                            Podés indicárnoslo en el mensaje o enviarlo por WhatsApp para una evaluación inmediata.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Formulario -->
+                <div class="lg:col-span-7">
+                    <form id="custom-quote-form" action="https://formspree.io/f/camilamonasterio94@hotmail.com" method="POST" onsubmit="submitCustomQuote(event)" class="space-y-4">
+                        
+                        <!-- Configuración del Asunto del correo -->
+                        <input type="hidden" name="_subject" value="Nueva solicitud de cotización - B-Max 3D">
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-brand-dark mb-1">Nombre completo *</label>
+                                <input type="text" id="quote-name" name="Nombre" required placeholder="Tu nombre" class="w-full bg-[#FAF7F4] border border-brand-border rounded-xl px-4 py-2.5 text-xs text-brand-dark focus:outline-none focus:border-brand-tan transition-colors" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-brand-dark mb-1">WhatsApp / Teléfono *</label>
+                                <input type="tel" id="quote-phone" name="Teléfono" required placeholder="Ej: +54 9 11 ..." class="w-full bg-[#FAF7F4] border border-brand-border rounded-xl px-4 py-2.5 text-xs text-brand-dark focus:outline-none focus:border-brand-tan transition-colors" />
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-brand-dark mb-1">Correo electrónico *</label>
+                                <input type="email" id="quote-email" name="Email" required placeholder="nombre@correo.com" class="w-full bg-[#FAF7F4] border border-brand-border rounded-xl px-4 py-2.5 text-xs text-brand-dark focus:outline-none focus:border-brand-tan transition-colors" />
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-brand-dark mb-1">Tipo de proyecto</label>
+                                <select id="quote-type" name="Tipo_de_proyecto" class="w-full bg-[#FAF7F4] border border-brand-border rounded-xl px-4 py-2.5 text-xs text-brand-dark focus:outline-none focus:border-brand-tan transition-colors">
+                                    <option value="Merchandising y Llaveros">Merchandising / Llaveros de marca</option>
+                                    <option value="Repuesto o Pieza Técnica">Repuesto o Pieza mecánica</option>
+                                    <option value="Decoración y Regalos">Decoración / Regalo exclusivo</option>
+                                    <option value="Maqueta o Prototipo">Maqueta / Prototipo de ingeniería</option>
+                                    <option value="Figura o Escultura">Figura / Escultura coleccionable</option>
+                                    <option value="Otro">Otro proyecto especial</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-brand-dark mb-1">Detalles de la pieza (medidas aprox, color deseado, cantidad) *</label>
+                            <textarea id="quote-details" name="Detalles_del_proyecto" required rows="4" placeholder="Ej: Quisiera imprimir 20 llaveros con el logo de mi estudio contable, en color negro y letras blancas, de 5x3 cm..." class="w-full bg-[#FAF7F4] border border-brand-border rounded-xl p-4 text-xs text-brand-dark focus:outline-none focus:border-brand-tan transition-colors"></textarea>
+                        </div>
+
+                        <button type="submit" id="quote-submit-btn" class="w-full bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-semibold py-3.5 px-6 rounded-full text-xs uppercase tracking-wider transition-all shadow-sm flex items-center justify-center gap-2">
+                            <span>Enviar Solicitud de Cotización</span>
+                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER
+         ========================================== -->
+    <footer class="bg-brand-footer py-10 border-t border-brand-border/60">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Logo Footer (Izquierda) -->
+            <div class="shrink-0">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[20px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Redes Sociales Oficiales (Centro) -->
+            <div class="flex items-center gap-5 text-brand-dark opacity-85">
+                <a href="https://www.instagram.com/baymax.3d" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/instagram_ico.png" alt="Instagram" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/facebook_ico.png" alt="Facebook" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://wa.me/5492622527982?text=Hola%20B-Max!%20Tengo%20una%20consulta" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/whatsapp_ico.png" alt="WhatsApp" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/youtube_ico.png" alt="YouTube" class="w-[19px] h-[19px] object-contain" />
+                </a>
+            </div>
+
+            <!-- Leyenda y Enlaces Rápidos (Derecha) -->
+            <div class="shrink-0 flex flex-wrap items-center justify-center gap-3 text-[10.5px] font-medium tracking-[0.12em] text-brand-subtext uppercase">
+                <a href="productos.html" class="hover:text-brand-dark transition-colors">Diseño</a>
+                <span class="text-brand-border">/</span>
+                <a href="personalizados.html" class="hover:text-brand-dark transition-colors">Funcionalidad</a>
+                <span class="text-brand-border">/</span>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors">Personalización</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="assets/app.js"></script>
+    <script>
+        async function submitCustomQuote(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('quote-submit-btn');
+            const originalBtnText = btn.innerHTML;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span>Enviando...</span>';
+
+            try {
+                const response = await fetch(form.action, {
+                    method: form.method,
+                    body: new FormData(form),
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    if (typeof showToast === 'function') {
+                        showToast('¡Solicitud enviada con éxito! Te responderemos pronto.');
+                    } else {
+                        alert('¡Solicitud enviada con éxito! Te responderemos pronto al correo provisto.');
+                    }
+                    form.reset();
+                } else {
+                    alert('Hubo un problema al enviar la solicitud. Por favor intenta de nuevo.');
+                }
+            } catch (error) {
+                alert('Ocurrió un error de conexión al enviar el formulario.');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalBtnText;
+            }
+        }
+    </script>
+</body>
+</html>

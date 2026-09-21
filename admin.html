@@ -1,0 +1,110 @@
+// ==========================================
+// CATÁLOGO DE PRODUCTOS Y CATEGORÍAS B-MAX IMPRESIÓN 3D
+// Persistencia Reactiva Local
+// ==========================================
+
+const BASE_BMAX_CATEGORIES = [
+    { id: 'todos', name: 'Todos' },
+    { id: 'organizacion', name: 'Organización' },
+    { id: 'decoracion', name: 'Decoración' },
+    { id: 'accesorios', name: 'Accesorios' },
+    { id: 'juguetes', name: 'Juguetes y Figuras' },
+    { id: 'personalizados', name: 'Personalizados' }
+];
+
+const BASE_BMAX_PRODUCTS = [
+    {
+        id: 'org-01',
+        name: 'Organizador Portalápices Modular',
+        category: 'organizacion',
+        categoryName: 'Organización',
+        price: 9500,
+        image: 'assets/imagenes/producto (1).jpg',
+        shortDesc: 'Portalápices con compartimentos escalonados para escritorio.',
+        desc: 'Diseñado para mantener tu espacio de trabajo impecable. Cuenta con 3 cavidades independientes.',
+        dimensions: '12 x 10 x 9 cm',
+        material: 'PLA Premium ecológico',
+        colors: ['Beige Nórdico', 'Negro Mate', 'Gris Cemento', 'Blanco Hueso']
+    },
+    {
+        id: 'org-02',
+        name: 'Soporte Ergonómico para Celular y Tablet',
+        category: 'organizacion',
+        categoryName: 'Organización',
+        price: 6800,
+        image: 'assets/imagenes/producto (2).jpg',
+        shortDesc: 'Ángulo óptimo de visualización con ranura pasacable.',
+        desc: 'Ideal para videollamadas, ver contenido o tener en el escritorio mientras cargás tu dispositivo.',
+        dimensions: '8 x 7 x 9 cm',
+        material: 'PLA de alta resistencia',
+        colors: ['Negro Mate', 'Cobre', 'Blanco']
+    },
+    {
+        id: 'dec-01',
+        name: 'Maceta Geométrica Facetada con Plato',
+        category: 'decoracion',
+        categoryName: 'Decoración',
+        price: 8400,
+        image: 'assets/imagenes/producto (4).jpg',
+        shortDesc: 'Ideal para suculentas y cactus con sistema de drenaje.',
+        desc: 'Inspirada en el origami y la geometría fractal. Aporta calidez y estilo nórdico a cualquier ambiente.',
+        dimensions: '10 x 10 x 9 cm',
+        material: 'PLA con acabado cerámico suave',
+        colors: ['Blanco Puro', 'Mármol Texturado', 'Crema', 'Verde Salvia']
+    }
+];
+
+// --- GESTIÓN DE CATEGORÍAS / CATÁLOGOS ---
+function getStoredCategories() {
+    try {
+        const stored = localStorage.getItem('bmax_custom_categories_v1');
+        if (stored) return JSON.parse(stored);
+    } catch (e) {
+        console.error('Error al cargar categorías:', e);
+    }
+    return BASE_BMAX_CATEGORIES;
+}
+
+function saveCategoriesToStorage(categoriesList) {
+    try {
+        localStorage.setItem('bmax_custom_categories_v1', JSON.stringify(categoriesList));
+    } catch (e) {
+        console.error('Error al guardar categorías:', e);
+    }
+}
+
+// --- GESTIÓN DE PRODUCTOS ---
+function getStoredProducts() {
+    try {
+        const stored = localStorage.getItem('bmax_custom_products_v1');
+        if (stored) return JSON.parse(stored);
+    } catch (e) {
+        console.error('Error al cargar productos:', e);
+    }
+    return BASE_BMAX_PRODUCTS;
+}
+
+function saveProductsToStorage(productsList) {
+    try {
+        localStorage.setItem('bmax_custom_products_v1', JSON.stringify(productsList));
+    } catch (e) {
+        console.error('Error al guardar catálogo:', e);
+    }
+}
+
+// Variables dinámicas para el uso en la tienda
+let BMAX_CATEGORIES = getStoredCategories();
+let BMAX_PRODUCTS = getStoredProducts();
+
+function reloadProductsCatalog() {
+    BMAX_CATEGORIES = getStoredCategories();
+    BMAX_PRODUCTS = getStoredProducts();
+}
+
+function formatPrice(amount) {
+    return new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS',
+        maximumFractionDigits: 0
+    }).format(amount);
+}

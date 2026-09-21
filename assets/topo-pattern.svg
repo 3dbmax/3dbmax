@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1001.14 915.43">
+  <!-- Generator: Adobe Illustrator 30.8.1, SVG Export Plug-In . SVG Version: 2.1.4 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        fill: url(#Degradado_sin_nombre_37087);
+      }
+
+      .st1 {
+        fill: url(#Degradado_sin_nombre_3708);
+      }
+
+      .st2 {
+        fill: url(#Degradado_sin_nombre_37086);
+      }
+
+      .st3 {
+        isolation: isolate;
+      }
+
+      .st4 {
+        mix-blend-mode: multiply;
+      }
+
+      .st5 {
+        filter: url(#drop-shadow-1);
+        opacity: .29;
+      }
+
+      .st6 {
+        fill: url(#Degradado_sin_nombre_37084);
+      }
+
+      .st7 {
+        fill: url(#Degradado_sin_nombre_37082);
+      }
+
+      .st8 {
+        fill: url(#Degradado_sin_nombre_37085);
+      }
+
+      .st9 {
+        fill: url(#Degradado_sin_nombre_37081);
+      }
+
+      .st10 {
+        fill: url(#Degradado_sin_nombre_37083);
+      }
+    </style>
+    <filter id="drop-shadow-1" x="13.14" y="11.86" width="995" height="908" filterUnits="userSpaceOnUse">
+      <feOffset dx="11" dy="8"/>
+      <feGaussianBlur result="blur" stdDeviation="7"/>
+      <feFlood flood-color="#000" flood-opacity=".4"/>
+      <feComposite in2="blur" operator="in"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="Degradado_sin_nombre_3708" data-name="Degradado sin nombre 3708" x1="150.54" y1="509.21" x2="594.22" y2="509.21" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c09163"/>
+      <stop offset=".32" stop-color="#b5857b"/>
+      <stop offset=".75" stop-color="#aa7796"/>
+      <stop offset="1" stop-color="#a673a1"/>
+    </linearGradient>
+    <linearGradient id="Degradado_sin_nombre_37081" data-name="Degradado sin nombre 3708" x1="532.2" y1="535.56" x2="860.99" y2="535.56" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37082" data-name="Degradado sin nombre 3708" x1="787.29" y1="119.96" x2="975.89" y2="119.96" gradientTransform="translate(798.72 -765.89) rotate(76.91)" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37083" data-name="Degradado sin nombre 3708" x1="23.95" y1="325.38" x2="212.55" y2="325.38" gradientTransform="translate(158.58 -18.46) rotate(26.66)" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37084" data-name="Degradado sin nombre 3708" x1="39.3" y1="468.21" x2="623.09" y2="468.21" gradientTransform="translate(-69.11 143.15) rotate(-15.06)" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37085" data-name="Degradado sin nombre 3708" x1="434.54" y1="577.91" x2="840.32" y2="577.91" gradientTransform="translate(-69.11 143.15) rotate(-15.06)" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37086" data-name="Degradado sin nombre 3708" x1="829.79" y1="224.65" x2="1018.34" y2="224.65" gradientTransform="translate(643.63 -800.77) rotate(61.85)" xlink:href="#Degradado_sin_nombre_3708"/>
+    <linearGradient id="Degradado_sin_nombre_37087" data-name="Degradado sin nombre 3708" x1="39.3" y1="224.65" x2="227.84" y2="224.65" gradientTransform="translate(32.58 78.46) rotate(11.6)" xlink:href="#Degradado_sin_nombre_3708"/>
+  </defs>
+  <g class="st3">
+    <g id="Capa_3">
+      <g class="st5">
+        <g>
+          <path class="st1" d="M581.67,269.62c12-20.89,16.04-46.35,9.29-71.44-13.53-50.28-65.26-80.07-115.53-66.54-31.78,8.55-55.34,32.39-64.98,61.46-3.16,5.5-245.35,549.68-247.36,555.72-12,20.89-16.04,46.35-9.29,71.44,13.53,50.28,65.26,80.07,115.53,66.54,31.78-8.55,55.34-32.39,64.98-61.45,3.16-5.5,245.35-549.68,247.36-555.72Z"/>
+          <path class="st9" d="M848.39,425.12c12.04-20.91,16.1-46.4,9.33-71.53-13.53-50.28-65.26-80.07-115.53-66.54-31.8,8.56-55.36,32.41-64.99,61.5-3.19,5.54-130.39,291.38-132.41,297.46-12.04,20.91-16.1,46.4-9.33,71.53,13.53,50.28,65.26,80.07,115.53,66.54,31.8-8.56,55.36-32.41,64.99-61.49,3.19-5.54,130.39-291.38,132.41-297.47Z"/>
+          <circle class="st7" cx="881.59" cy="119.96" r="94.27" transform="translate(565.04 951.45) rotate(-76.91)"/>
+          <circle class="st10" cx="118.25" cy="325.38" r="94.27" transform="translate(-133.43 87.66) rotate(-26.66)"/>
+        </g>
+        <g class="st4">
+          <path class="st6" d="M581.67,269.62c12-20.89,16.04-46.35,9.29-71.44-13.53-50.28-65.26-80.07-115.53-66.54-31.78,8.55-55.34,32.39-64.98,61.46-3.16,5.5-245.35,549.68-247.36,555.72-12,20.89-16.04,46.35-9.29,71.44,13.53,50.28,65.26,80.07,115.53,66.54,31.78-8.55,55.34-32.39,64.98-61.45,3.16-5.5,245.35-549.68,247.36-555.72Z"/>
+          <path class="st8" d="M848.39,425.12c12.04-20.91,16.1-46.4,9.33-71.53-13.53-50.28-65.26-80.07-115.53-66.54-31.8,8.56-55.36,32.41-64.99,61.5-3.19,5.54-130.39,291.38-132.41,297.46-12.04,20.91-16.1,46.4-9.33,71.53,13.53,50.28,65.26,80.07,115.53,66.54,31.8-8.56,55.36-32.41,64.99-61.49,3.19-5.54,130.39-291.38,132.41-297.47Z"/>
+          <circle class="st2" cx="881.59" cy="119.96" r="94.27" transform="translate(565.04 951.45) rotate(-76.91)"/>
+          <circle class="st0" cx="118.25" cy="325.38" r="94.27" transform="translate(-133.43 87.66) rotate(-26.66)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

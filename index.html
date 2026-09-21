@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B-Max Impresión 3D | Diseños únicos y personalizados</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            header: '#EFEAE4',
+                            beige: '#EEE9E3',
+                            features: '#F4F1EC',
+                            card: '#FFFFFF',
+                            tan: '#CFAD91',
+                            tanhover: '#C29E80',
+                            aboutcard: '#F6F2EC',
+                            aboutright: '#F9F6F1',
+                            ctabg: '#4A3D34',
+                            footer: '#F3EEEA',
+                            dark: '#2B221B',
+                            text: '#2F2620',
+                            subtext: '#766B63',
+                            border: '#E3DDD5'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', '-apple-system', 'sans-serif'],
+                        script: ['Caveat', 'cursive']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .hero-banner {
+            background-color: #2F241E;
+            background-image: linear-gradient(to right, rgba(43, 34, 28, 0.90) 0%, rgba(43, 34, 28, 0.70) 32%, rgba(43, 34, 28, 0.15) 52%, rgba(43, 34, 28, 0) 65%), url('assets/hero-clean.png');
+            background-size: cover;
+            background-position: right center;
+            background-repeat: no-repeat;
+        }
+
+        .cta-contour-bg {
+            background-color: #4A3D34;
+            background-image: url('assets/topo-pattern.svg');
+            background-size: 900px 450px;
+            background-repeat: repeat;
+        }
+
+        body {
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body class="font-sans text-brand-text bg-brand-beige antialiased selection:bg-brand-tan selection:text-brand-dark">
+
+    <!-- ==========================================
+         HEADER / NAVEGACIÓN
+         ========================================== -->
+    <header class="w-full bg-brand-header sticky top-0 z-50 shadow-sm/5">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 py-4 flex justify-between items-center">
+            
+            <!-- Logo (Izquierda) -->
+            <div class="shrink-0 flex items-center gap-3">
+                <!-- Botón hamburguesa móvil -->
+                <button id="btn-mobile-menu" aria-label="Menú móvil" class="lg:hidden p-1 text-brand-dark hover:text-brand-tan">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[21px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Menú Central (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-8 xl:gap-10 text-[11px] font-semibold tracking-[0.14em] text-brand-subtext uppercase">
+                <a href="index.html" class="text-brand-dark flex flex-col items-center pt-2 transition-colors whitespace-nowrap">
+                    INICIO
+                    <span class="w-6 h-[2px] bg-brand-dark block rounded-full mt-1.5"></span>
+                </a>
+                <a href="productos.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">PRODUCTOS</a>
+                <a href="personalizados.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">PERSONALIZADOS</a>
+                <a href="nosotros.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">SOBRE NOSOTROS</a>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors pt-2 pb-[8px] whitespace-nowrap">CONTACTO</a>
+            </nav>
+
+            <!-- Iconos de Acción (Derecha) -->
+            <div class="shrink-0 flex items-center gap-5 text-brand-dark">
+                <!-- Búsqueda -->
+                <button type="button" aria-label="Buscar" class="btn-search p-1 hover:text-brand-tan transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path stroke-linecap="round" d="M16.5 16.5L21 21"></path>
+                    </svg>
+                </button>
+                <!-- Carrito con contador interactivo -->
+                <a href="carrito.html" aria-label="Carrito de compras" class="p-1 hover:text-brand-tan transition-colors relative flex items-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h2l1.6 8.5a2 2 0 002 1.5h8.8a2 2 0 001.9-1.4l1.7-6.6H5.5"></path>
+                        <circle cx="9.5" cy="18.5" r="1.5"></circle>
+                        <circle cx="16.5" cy="18.5" r="1.5"></circle>
+                    </svg>
+                    <span class="cart-badge hidden absolute -top-1.5 -right-2 bg-brand-dark text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Menú Móvil Desplegable -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-brand-header border-t border-brand-border/60 px-6 py-4 flex flex-col gap-3 text-xs font-semibold tracking-wider uppercase text-brand-subtext">
+            <a href="index.html" class="text-brand-dark py-1">Inicio</a>
+            <a href="productos.html" class="hover:text-brand-dark py-1">Productos</a>
+            <a href="personalizados.html" class="hover:text-brand-dark py-1">Personalizados</a>
+            <a href="nosotros.html" class="hover:text-brand-dark py-1">Sobre Nosotros</a>
+            <a href="contacto.html" class="hover:text-brand-dark py-1">Contacto</a>
+            <a href="carrito.html" class="hover:text-brand-dark py-1 flex items-center justify-between text-brand-tan font-bold">
+                <span>Mi Carrito</span>
+                <span class="cart-badge bg-brand-dark text-white text-[10px] px-2 py-0.5 rounded-full">0</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- ==========================================
+         HERO SECTION
+         ========================================== -->
+    <section class="w-full min-h-[500px] lg:min-h-[560px] hero-banner flex items-center relative overflow-hidden">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 w-full py-16 lg:py-24">
+            <div class="max-w-xl text-white">
+                <p class="text-[11px] font-semibold tracking-[0.24em] mb-4 text-[#D8CEC4] uppercase">
+                    Ideas que cobran forma
+                </p>
+                <h1 class="text-5xl lg:text-[66px] font-medium mb-6 leading-[1.08] tracking-tight">
+                    B-Max<br>Impresión 3D
+                </h1>
+                <p class="text-[15px] lg:text-[16px] text-[#E0D7CD] font-light leading-relaxed mb-9 max-w-md">
+                    Diseños funcionales, únicos y personalizados.<br>
+                    Transformamos tus ideas en objetos reales.
+                </p>
+                <div>
+                    <a href="productos.html" class="inline-flex items-center gap-3 bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-semibold px-8 py-3.5 rounded-full transition-all duration-300 text-[11px] tracking-[0.16em] uppercase shadow-sm hover:shadow">
+                        <span>VER PRODUCTOS</span>
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         BARRA DE BENEFICIOS / FEATURES
+         ========================================== -->
+    <section class="bg-brand-features border-b border-brand-border/60">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            <div class="grid grid-cols-2 lg:grid-cols-4 py-7">
+                
+                <!-- Beneficio 1: Calidad -->
+                <div class="flex items-center justify-center lg:justify-start gap-4 lg:border-r border-brand-border/80 py-3 lg:py-0">
+                    <svg class="w-8 h-8 text-brand-dark opacity-85 shrink-0" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-[11px] font-bold tracking-[0.14em] text-brand-dark uppercase">Calidad</h3>
+                        <p class="text-[10px] text-brand-subtext uppercase tracking-[0.18em] mt-0.5">En cada detalle</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio 2: Diseños -->
+                <div class="flex items-center justify-center lg:justify-start gap-4 lg:border-r border-brand-border/80 py-3 lg:py-0 lg:pl-10">
+                    <svg class="w-8 h-8 text-brand-dark opacity-85 shrink-0" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                    </svg>
+                    <div>
+                        <h3 class="text-[11px] font-bold tracking-[0.14em] text-brand-dark uppercase">Diseños</h3>
+                        <p class="text-[10px] text-brand-subtext uppercase tracking-[0.18em] mt-0.5">Personalizados</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio 3: Producción -->
+                <div class="flex items-center justify-center lg:justify-start gap-4 lg:border-r border-brand-border/80 py-3 lg:py-0 lg:pl-10">
+                    <svg class="w-8 h-8 text-brand-dark opacity-85 shrink-0" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div>
+                        <h3 class="text-[11px] font-bold tracking-[0.14em] text-brand-dark uppercase">Producción</h3>
+                        <p class="text-[10px] text-brand-subtext uppercase tracking-[0.18em] mt-0.5">Ágil</p>
+                    </div>
+                </div>
+
+                <!-- Beneficio 4: Envíos -->
+                <div class="flex items-center justify-center lg:justify-start gap-4 py-3 lg:py-0 lg:pl-10">
+                    <svg class="w-8 h-8 text-brand-dark opacity-85 shrink-0" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.25V14.25m0-6.75h-9a1.5 1.5 0 00-1.5 1.5v6" />
+                    </svg>
+                    <div>
+                        <h3 class="text-[11px] font-bold tracking-[0.14em] text-brand-dark uppercase">Envíos a todo</h3>
+                        <p class="text-[10px] text-brand-subtext uppercase tracking-[0.18em] mt-0.5">El país</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         CATEGORÍAS DE PRODUCTOS
+         ========================================== -->
+    <section id="productos-seccion" class="py-20 lg:py-24">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            
+            <!-- Encabezado de Sección -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <h2 class="text-[11px] font-semibold tracking-[0.22em] text-brand-subtext uppercase mb-2">Nuestras categorías</h2>
+                    <h3 class="text-3xl lg:text-[44px] font-light text-brand-dark tracking-tight leading-tight">Explorá lo que hacemos</h3>
+                </div>
+                <a href="productos.html" class="text-[10.5px] font-bold tracking-[0.16em] text-brand-dark hover:text-brand-tan transition-colors uppercase flex items-center gap-2 pb-1 group">
+                    <span>VER TODOS LOS PRODUCTOS</span>
+                    <svg class="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <polyline points="12 5 19 12 12 19"></polyline>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Grilla de 5 Tarjetas Blancas Vinculadas -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                
+                <!-- Card 1: Organización -->
+                <a href="productos.html?cat=organizacion" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="assets/imagenes/producto (1).jpg" alt="Organización" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Organización</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">Funcionalidad en<br>tu espacio</p>
+                </a>
+
+                <!-- Card 2: Decoración -->
+                <a href="productos.html?cat=decoracion" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="assets/imagenes/producto (2).jpg" alt="Decoración" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Decoración</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">Detalles que<br>hacen la diferencia</p>
+                </a>
+
+                <!-- Card 3: Accesorios -->
+                <a href="productos.html?cat=accesorios" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="assets/imagenes/producto (3).jpg" alt="Accesorios" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Accesorios</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">Llevá tu estilo<br>a otro nivel</p>
+                </a>
+
+                <!-- Card 4: Juguetes y Figuras -->
+                <a href="productos.html?cat=juguetes" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="assets/imagenes/producto (4).jpg" alt="Juguetes y Figuras" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Juguetes y Figuras</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">Imaginación sin límites</p>
+                </a>
+
+                <!-- Card 5: Personalizados -->
+                <a href="personalizados.html" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="assets/imagenes/producto (5).jpg" alt="Personalizados" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Personalizados</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">Tu idea, nuestro diseño</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         SOBRE B-MAX
+         ========================================== -->
+    <section id="sobre-nosotros" class="pb-20 lg:pb-24">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
+            <div class="flex flex-col lg:flex-row shadow-sm overflow-hidden rounded-2xl bg-brand-aboutcard border border-brand-border/40">
+                
+                <!-- Imagen de la Impresora 3D (Izquierda) -->
+                <div class="w-full lg:w-[46%] min-h-[340px] lg:min-h-[460px] relative overflow-hidden bg-gray-200">
+                    <img src="assets/about-printer.png" alt="Impresora 3D en funcionamiento" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Contenido Informativo (Derecha) -->
+                <div class="w-full lg:w-[54%] p-8 sm:p-12 lg:p-16 flex flex-col justify-center relative bg-brand-aboutright">
+                    <h2 class="text-[10.5px] font-semibold tracking-[0.24em] text-brand-subtext uppercase mb-3">Sobre B-Max</h2>
+                    <h3 class="text-3xl lg:text-[40px] font-light text-brand-dark mb-5 leading-[1.18] tracking-tight">
+                        Más que impresión,<br>creamos soluciones
+                    </h3>
+                    <p class="text-[13.5px] lg:text-[14px] text-brand-subtext mb-8 max-w-md leading-relaxed font-light">
+                        En B-Max Impresión 3D combinamos tecnología, diseño y creatividad para ofrecerte productos únicos, funcionales y de alta calidad. Cada pieza es el resultado de un proceso cuidadoso, pensado para vos.
+                    </p>
+                    <div>
+                        <a href="nosotros.html" class="inline-flex items-center gap-3 bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-semibold px-7 py-3.5 rounded-full transition-all duration-300 text-[11px] tracking-[0.16em] uppercase shadow-sm hover:shadow">
+                            <span>CONOCÉ MÁS</span>
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Texto decorativo manuscrito -->
+                    <div class="hidden sm:flex flex-col items-center absolute right-8 bottom-8 lg:right-16 lg:bottom-12 transform -rotate-12 select-none pointer-events-none opacity-80">
+                        <span class="font-script text-[36px] lg:text-[40px] text-brand-dark leading-[0.92] text-center">
+                            Ideas<br>que se<br>imprimen
+                        </span>
+                        <svg class="w-20 h-4 text-brand-dark mt-1" viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+                            <path d="M5,12 Q50,18 95,6" />
+                        </svg>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         CALL TO ACTION: HABLEMOS
+         ========================================== -->
+    <section id="contacto" class="cta-contour-bg py-24 lg:py-28 text-center relative overflow-hidden">
+        <div class="max-w-2xl mx-auto px-6 relative z-10 text-white">
+            <h2 class="text-[10.5px] font-semibold tracking-[0.26em] uppercase mb-3 text-[#D6CBC1]">
+                ¿Tenés una idea?
+            </h2>
+            <h3 class="text-4xl lg:text-5xl font-light mb-3 tracking-tight">
+                Hablemos
+            </h3>
+            <p class="text-[14px] text-[#D0C5BA] mb-9 font-light">
+                Estamos para ayudarte a convertirla en realidad.
+            </p>
+            <a href="contacto.html" class="inline-flex items-center gap-3 bg-[#FAF7F2] hover:bg-white text-brand-dark font-semibold px-9 py-3.5 rounded-full transition-all duration-300 text-[11px] tracking-[0.16em] uppercase shadow hover:shadow-md">
+                <span>CONTACTANOS</span>
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- ==========================================
+         FOOTER / PIE DE PÁGINA
+         ========================================== -->
+    <footer class="bg-brand-footer py-10 border-t border-brand-border/60">
+        <div class="max-w-[1360px] mx-auto px-6 lg:px-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            
+            <!-- Logo Footer (Izquierda) -->
+            <div class="shrink-0">
+                <a href="index.html" class="flex items-center gap-3 group">
+                    <img src="assets/logo-icon.png" alt="B-Max 3D Icon" class="w-8 h-8 object-contain transition-transform duration-300 group-hover:scale-105" />
+                    <div class="flex flex-col">
+                        <span class="text-[20px] font-bold leading-none tracking-tight text-brand-dark">B-Max</span>
+                        <span class="text-[8.5px] tracking-[0.28em] font-semibold text-brand-subtext mt-1 uppercase">IMPRESIÓN 3D</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Redes Sociales Oficiales (Centro) -->
+            <div class="flex items-center gap-5 text-brand-dark opacity-85">
+                <a href="https://www.instagram.com/baymax.3d" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/instagram_ico.png" alt="Instagram" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/facebook_ico.png" alt="Facebook" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://wa.me/5492622527982?text=Hola%20B-Max!%20Tengo%20una%20consulta" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/whatsapp_ico.png" alt="WhatsApp" class="w-[19px] h-[19px] object-contain" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="hover:opacity-60 transition-all p-1 hover:scale-110 duration-200">
+                    <img src="assets/iconos/youtube_ico.png" alt="YouTube" class="w-[19px] h-[19px] object-contain" />
+                </a>
+            </div>
+
+            <!-- Leyenda y Enlaces Rápidos (Derecha) -->
+            <div class="shrink-0 flex flex-wrap items-center justify-center gap-3 text-[10.5px] font-medium tracking-[0.12em] text-brand-subtext uppercase">
+                <a href="productos.html" class="hover:text-brand-dark transition-colors">Diseño</a>
+                <span class="text-brand-border">/</span>
+                <a href="personalizados.html" class="hover:text-brand-dark transition-colors">Funcionalidad</a>
+                <span class="text-brand-border">/</span>
+                <a href="contacto.html" class="hover:text-brand-dark transition-colors">Personalización</a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- Scripts Globales -->
+    <script src="assets/app.js"></script>
+</body>
+</html>
