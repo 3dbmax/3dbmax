@@ -222,7 +222,7 @@
     </section>
 
     <!-- ==========================================
-         CATEGORÍAS DE PRODUCTOS (DINÁMICAS DE FIREBASE)
+         CATEGORÍAS DE PRODUCTOS (DINÁMICAS + TARJETA PERSONALIZADOS)
          ========================================== -->
     <section id="productos-seccion" class="py-20 lg:py-24">
         <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
@@ -242,7 +242,7 @@
                 </a>
             </div>
 
-            <!-- Grilla Dinámica de Tarjetas Vinculadas -->
+            <!-- Grilla Dinámica de Tarjetas -->
             <div id="home-categories-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
                 <div class="col-span-full text-center py-12 text-brand-subtext font-light text-xs">
                     Cargando categorías de la nube...
@@ -374,16 +374,17 @@
         import { syncFirebaseData, BMAX_CATEGORIES } from './assets/products.js';
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Cargar o sembrar automáticamente las categorías desde Firestore
+            // Cargar o sincronizar las categorías desde Firestore
             await syncFirebaseData();
             
             const grid = document.getElementById('home-categories-grid');
             if (!grid) return;
 
-            // Filtrar la categoría reservada 'todos' para listar solo las tarjetas reales
-            const categoriesToShow = BMAX_CATEGORIES.filter(c => c.id !== 'todos');
+            // Filtrar 'todos' y evitar duplicar 'personalizados' si existiera en la DB
+            const categoriesToShow = BMAX_CATEGORIES.filter(c => c.id !== 'todos' && c.id !== 'personalizados');
 
-            grid.innerHTML = categoriesToShow.map(c => `
+            // 1. Mapeo de categorías dinámicas estándar
+            let htmlContent = categoriesToShow.map(c => `
                 <a href="productos.html?cat=${c.id}" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
                     <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
                         <img src="${c.image || 'assets/imagenes/producto (1).jpg'}" alt="${c.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
@@ -392,6 +393,26 @@
                     <p class="text-[11.5px] text-brand-subtext leading-snug">${c.subtitle || ''}</p>
                 </a>
             `).join('');
+
+            // 2. Tarjeta Especial VIP para "Personalizados" (Link a personalizados.html)
+            const customCardHTML = `
+                <a href="personalizados.html" class="bg-gradient-to-br from-[#4A3D34] to-[#2B221B] text-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 group border border-brand-tan/30 relative overflow-hidden block">
+                    <div class="w-full aspect-square rounded-xl bg-[#3A2F27] mb-4 flex flex-col items-center justify-center p-4 relative overflow-hidden border border-brand-tan/20">
+                        <div class="absolute -right-6 -bottom-6 w-24 h-24 bg-brand-tan/10 rounded-full blur-xl pointer-events-none"></div>
+                        <span class="bg-brand-tan text-brand-dark text-[8.5px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider mb-2 z-10">A Pedido</span>
+                        <svg class="w-10 h-10 text-brand-tan transition-transform duration-300 group-hover:scale-110 z-10" fill="none" stroke="currentColor" stroke-width="1.3" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l2.846-.813a2.25 2.25 0 00.702-.382l8.826-8.826a2.25 2.25 0 000-3.182l-1.591-1.591a2.25 2.25 0 00-3.182 0l-8.826 8.826a2.25 2.25 0 00-.382.702zM15 6.75L17.25 9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 21h18" />
+                        </svg>
+                        <span class="text-[9px] text-[#D0C5BA] uppercase tracking-[0.2em] font-medium mt-2 z-10">Tu idea en 3D</span>
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-tan uppercase mb-1.5 group-hover:text-white transition-colors">Personalizados</h4>
+                    <p class="text-[11.5px] text-[#D6CBC1] leading-snug">Cotizaciones a medida</p>
+                </a>
+            `;
+
+            // Insertar todas las categorías dinámicas + la tarjeta especial al final
+            grid.innerHTML = htmlContent + customCardHTML;
         });
     </script>
 </body>
