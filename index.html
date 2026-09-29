@@ -222,7 +222,7 @@
     </section>
 
     <!-- ==========================================
-         CATEGORÍAS DE PRODUCTOS
+         CATEGORÍAS DE PRODUCTOS (DINÁMICAS DE FIREBASE)
          ========================================== -->
     <section id="productos-seccion" class="py-20 lg:py-24">
         <div class="max-w-[1360px] mx-auto px-6 lg:px-12">
@@ -242,54 +242,11 @@
                 </a>
             </div>
 
-            <!-- Grilla de 5 Tarjetas Blancas Vinculadas -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-                
-                <!-- Card 1: Organización -->
-                <a href="productos.html?cat=organizacion" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
-                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
-                        <img src="assets/imagenes/producto (1).jpg" alt="Organización" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Organización</h4>
-                    <p class="text-[11.5px] text-brand-subtext leading-snug">Funcionalidad en<br>tu espacio</p>
-                </a>
-
-                <!-- Card 2: Decoración -->
-                <a href="productos.html?cat=decoracion" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
-                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
-                        <img src="assets/imagenes/producto (2).jpg" alt="Decoración" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Decoración</h4>
-                    <p class="text-[11.5px] text-brand-subtext leading-snug">Detalles que<br>hacen la diferencia</p>
-                </a>
-
-                <!-- Card 3: Accesorios -->
-                <a href="productos.html?cat=accesorios" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
-                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
-                        <img src="assets/imagenes/producto (3).jpg" alt="Accesorios" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Accesorios</h4>
-                    <p class="text-[11.5px] text-brand-subtext leading-snug">Llevá tu estilo<br>a otro nivel</p>
-                </a>
-
-                <!-- Card 4: Juguetes y Figuras -->
-                <a href="productos.html?cat=juguetes" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
-                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
-                        <img src="assets/imagenes/producto (4).jpg" alt="Juguetes y Figuras" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Juguetes y Figuras</h4>
-                    <p class="text-[11.5px] text-brand-subtext leading-snug">Imaginación sin límites</p>
-                </a>
-
-                <!-- Card 5: Personalizados -->
-                <a href="personalizados.html" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
-                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
-                        <img src="assets/imagenes/producto (5).jpg" alt="Personalizados" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                    </div>
-                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">Personalizados</h4>
-                    <p class="text-[11.5px] text-brand-subtext leading-snug">Tu idea, nuestro diseño</p>
-                </a>
-
+            <!-- Grilla Dinámica de Tarjetas Vinculadas -->
+            <div id="home-categories-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+                <div class="col-span-full text-center py-12 text-brand-subtext font-light text-xs">
+                    Cargando categorías de la nube...
+                </div>
             </div>
         </div>
     </section>
@@ -411,5 +368,31 @@
 
     <!-- Scripts Globales -->
     <script src="assets/app.js"></script>
+
+    <!-- Script de Integración Dinámica con Firebase -->
+    <script type="module">
+        import { syncFirebaseData, BMAX_CATEGORIES } from './assets/products.js';
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Cargar o sembrar automáticamente las categorías desde Firestore
+            await syncFirebaseData();
+            
+            const grid = document.getElementById('home-categories-grid');
+            if (!grid) return;
+
+            // Filtrar la categoría reservada 'todos' para listar solo las tarjetas reales
+            const categoriesToShow = BMAX_CATEGORIES.filter(c => c.id !== 'todos');
+
+            grid.innerHTML = categoriesToShow.map(c => `
+                <a href="productos.html?cat=${c.id}" class="bg-white rounded-2xl p-2.5 pb-7 flex flex-col items-center text-center shadow-[0_2px_10px_rgba(0,0,0,0.03)] hover:shadow-md transition-all duration-300 hover:-translate-y-1.5 group border border-brand-border/40 block">
+                    <div class="w-full aspect-square overflow-hidden rounded-xl bg-[#EBE5DE] mb-4">
+                        <img src="${c.image || 'assets/imagenes/producto (1).jpg'}" alt="${c.name}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    </div>
+                    <h4 class="text-[11px] font-bold tracking-[0.12em] text-brand-dark uppercase mb-1.5 group-hover:text-brand-tan transition-colors">${c.name}</h4>
+                    <p class="text-[11.5px] text-brand-subtext leading-snug">${c.subtitle || ''}</p>
+                </a>
+            `).join('');
+        });
+    </script>
 </body>
 </html>
