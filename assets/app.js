@@ -289,18 +289,30 @@ export function toggleMobileMenu() {
     if (menu) menu.classList.toggle('hidden');
 }
 
-// Inicialización
-document.addEventListener('DOMContentLoaded', () => {
+// Exponer funciones necesarias en el ámbito global de window
+window.renderHeaderAdminBtn = renderHeaderAdminBtn;
+window.openLoginModal = openLoginModal;
+window.closeLoginModal = closeLoginModal;
+window.isAdminLoggedIn = isAdminLoggedIn;
+
+// Inicialización automática y segura de la UI
+function initAppUI() {
     updateCartBadge();
     renderHeaderAdminBtn();
 
     document.querySelectorAll('.btn-search').forEach(btn => {
-        btn.addEventListener('click', (e) => {
+        btn.onclick = (e) => {
             e.preventDefault();
             openSearchModal();
-        });
+        };
     });
 
     const mobileBtn = document.getElementById('btn-mobile-menu');
-    if (mobileBtn) mobileBtn.addEventListener('click', toggleMobileMenu);
-});
+    if (mobileBtn) mobileBtn.onclick = toggleMobileMenu;
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAppUI);
+} else {
+    initAppUI();
+}
