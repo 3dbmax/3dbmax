@@ -34,7 +34,6 @@
             }
         }
     </script>
-    <!-- Carga del JS global sin tipo module -->
     <script src="assets/app.js"></script>
 </head>
 <body class="font-sans text-brand-text bg-brand-beige min-h-screen flex flex-col justify-between">
@@ -67,7 +66,7 @@
             <div class="flex items-center gap-3">
                 <button id="btn-open-cat-modal" class="bg-white hover:bg-brand-tan/20 text-brand-dark border border-brand-border font-bold px-4 py-2.5 rounded-full text-xs uppercase tracking-wider transition-all flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span>Nuevo Catálogo</span>
+                    <span>Nuevo / Editar Catálogo</span>
                 </button>
                 <button id="btn-open-prod-modal" class="bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-bold px-5 py-2.5 rounded-full text-xs uppercase tracking-wider shadow-sm transition-all flex items-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -76,16 +75,14 @@
             </div>
         </div>
 
-        <!-- SECCIONES DE GESTIÓN -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
             <div class="lg:col-span-8 space-y-6">
                 <!-- CATÁLOGOS -->
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-brand-border">
-                    <h2 class="text-sm font-bold uppercase tracking-wider text-brand-dark mb-3 pb-2 border-b border-brand-border">
-                        Catálogos Activos
+                    <h2 class="text-sm font-bold uppercase tracking-wider text-brand-dark mb-4 pb-2 border-b border-brand-border">
+                        Catálogos Activos y Portadas
                     </h2>
-                    <div id="admin-categories-list" class="flex flex-wrap gap-2"></div>
+                    <div id="admin-categories-list" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
                 </div>
 
                 <!-- PRODUCTOS -->
@@ -106,24 +103,39 @@
                     <div id="admin-cart-list" class="space-y-3"></div>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- MODAL CATÁLOGO -->
+    <!-- MODAL CATÁLOGO MEJORADO -->
     <div id="category-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-[#FAF7F4] w-full max-w-md rounded-3xl p-6 shadow-2xl border border-brand-border relative">
             <button id="btn-close-cat" class="absolute top-4 right-4 text-gray-400 hover:text-black text-xl">&times;</button>
-            <h2 class="text-xl font-light text-brand-dark mb-4">Crear Nuevo Catálogo</h2>
+            <h2 id="cat-modal-title" class="text-xl font-light text-brand-dark mb-4">Gestión de Catálogo</h2>
             
             <form id="category-form" class="space-y-4">
+                <input type="hidden" id="cat-id" />
                 <div>
                     <label class="block text-xs font-semibold text-brand-dark mb-1">Nombre del Catálogo *</label>
-                    <input type="text" id="cat-name" required placeholder="Ej: Mates y Macetas" class="w-full bg-white border border-brand-border rounded-xl px-3.5 py-2 text-xs" />
+                    <input type="text" id="cat-name" required placeholder="Ej: Decoración" class="w-full bg-white border border-brand-border rounded-xl px-3.5 py-2 text-xs" />
                 </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-brand-dark mb-1">Subtítulo / Comentario *</label>
+                    <input type="text" id="cat-subtitle" required placeholder="Ej: Detalles que hacen la diferencia" class="w-full bg-white border border-brand-border rounded-xl px-3.5 py-2 text-xs" />
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-brand-dark mb-1">Imagen de Portada (Firebase Storage)</label>
+                    <div class="flex items-center gap-3">
+                        <input type="file" id="cat-image-file" accept="image/*" class="text-xs text-brand-subtext file:mr-2 file:py-1 file:px-2.5 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-tan file:text-brand-dark cursor-pointer" />
+                        <img id="cat-image-preview" src="" class="w-10 h-10 object-cover rounded-lg bg-gray-200 hidden border border-brand-border" />
+                    </div>
+                    <input type="hidden" id="cat-image-url" />
+                </div>
+
                 <div class="flex justify-end gap-3 pt-2">
                     <button type="button" id="btn-cancel-cat" class="px-4 py-2 rounded-full text-xs font-semibold text-brand-subtext">Cancelar</button>
-                    <button type="submit" class="bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-bold px-5 py-2 rounded-full text-xs uppercase tracking-wider">Guardar en Firebase</button>
+                    <button type="submit" id="btn-submit-cat" class="bg-brand-tan hover:bg-brand-tanhover text-brand-dark font-bold px-5 py-2 rounded-full text-xs uppercase tracking-wider">Guardar Catálogo</button>
                 </div>
             </form>
         </div>
@@ -133,12 +145,10 @@
     <div id="edit-product-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4">
         <div class="bg-[#FAF7F4] w-full max-w-2xl rounded-3xl p-6 md:p-8 shadow-2xl border border-brand-border relative max-h-[90vh] overflow-y-auto">
             <button id="btn-close-prod" class="absolute top-4 right-4 text-gray-400 hover:text-black text-xl">&times;</button>
-            
             <h2 id="modal-title" class="text-xl font-light text-brand-dark mb-6">Editar Producto</h2>
 
             <form id="product-form" class="space-y-4">
                 <input type="hidden" id="form-id" />
-
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block text-xs font-semibold text-brand-dark mb-1">Nombre *</label>
@@ -162,22 +172,17 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-brand-dark mb-1">Imagen (Subir a Firebase Storage)</label>
+                    <label class="block text-xs font-semibold text-brand-dark mb-1">Imagen del Producto</label>
                     <div class="flex items-center gap-4">
-                        <input type="file" id="form-image-file" accept="image/*" class="text-xs text-brand-subtext file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-tan file:text-brand-dark hover:file:bg-brand-tanhover cursor-pointer" />
+                        <input type="file" id="form-image-file" accept="image/*" class="text-xs text-brand-subtext file:mr-3 file:py-1.5 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-brand-tan file:text-brand-dark cursor-pointer" />
                         <img id="image-preview" src="" class="w-12 h-12 object-cover rounded-xl bg-gray-200 hidden border border-brand-border" />
                     </div>
                     <input type="hidden" id="form-image-url" />
                 </div>
 
                 <div>
-                    <label class="block text-xs font-semibold text-brand-dark mb-1">Descripción Completa (Editor Enrich)</label>
-                    <div class="flex items-center gap-2 bg-brand-beige p-2 rounded-t-xl border border-brand-border border-b-0 text-xs">
-                        <button type="button" id="btn-bold" class="px-2 py-1 bg-white hover:bg-gray-100 rounded font-bold border">B</button>
-                        <button type="button" id="btn-italic" class="px-2 py-1 bg-white hover:bg-gray-100 rounded italic border">I</button>
-                        <button type="button" id="btn-underline" class="px-2 py-1 bg-white hover:bg-gray-100 rounded underline border">U</button>
-                    </div>
-                    <div id="editor-content" contenteditable="true" class="w-full min-h-[120px] bg-white border border-brand-border rounded-b-xl p-3 text-xs focus:outline-none focus:border-brand-tan leading-relaxed"></div>
+                    <label class="block text-xs font-semibold text-brand-dark mb-1">Descripción Completa</label>
+                    <div id="editor-content" contenteditable="true" class="w-full min-h-[120px] bg-white border border-brand-border rounded-xl p-3 text-xs focus:outline-none focus:border-brand-tan leading-relaxed"></div>
                 </div>
 
                 <div class="flex justify-end gap-3 pt-4 border-t border-brand-border">
@@ -196,7 +201,8 @@
             saveCategoryToFirebase, deleteCategoryFromFirebase
         } from './assets/products.js';
 
-        let selectedFile = null;
+        let selectedProductFile = null;
+        let selectedCatFile = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
             if (!window.isAdminLoggedIn()) {
@@ -221,9 +227,18 @@
             container.innerHTML = BMAX_CATEGORIES.map(c => {
                 if (c.id === 'todos') return '';
                 return `
-                    <div class="bg-brand-beige/60 border border-brand-border rounded-full px-3 py-1 flex items-center gap-2 text-xs font-semibold text-brand-dark">
-                        <span>${c.name}</span>
-                        <button data-catid="${c.id}" class="btn-delete-cat text-red-500 hover:text-red-700 font-bold ml-1">&times;</button>
+                    <div class="bg-brand-beige/60 border border-brand-border rounded-xl p-3 flex items-center justify-between gap-3 text-xs">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            <img src="${c.image || 'assets/imagenes/producto (1).jpg'}" class="w-12 h-12 object-cover rounded-lg bg-gray-200 shrink-0" />
+                            <div class="truncate">
+                                <div class="font-bold text-brand-dark">${c.name}</div>
+                                <div class="text-[10px] text-brand-subtext truncate">${c.subtitle || ''}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 shrink-0">
+                            <button data-catid="${c.id}" class="btn-edit-cat px-2.5 py-1 bg-white hover:bg-brand-tan/30 rounded-full font-semibold text-[11px]">Editar</button>
+                            <button data-catid="${c.id}" class="btn-delete-cat px-2.5 py-1 bg-red-100 hover:bg-red-200 text-red-700 rounded-full font-semibold text-[11px]">&times;</button>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -232,6 +247,10 @@
             select.innerHTML = BMAX_CATEGORIES.filter(c => c.id !== 'todos').map(c => `
                 <option value="${c.id}">${c.name}</option>
             `).join('');
+
+            document.querySelectorAll('.btn-edit-cat').forEach(btn => {
+                btn.onclick = () => openEditCategoryModal(btn.getAttribute('data-catid'));
+            });
 
             document.querySelectorAll('.btn-delete-cat').forEach(btn => {
                 btn.onclick = async () => {
@@ -265,7 +284,7 @@
             `).join('');
 
             document.querySelectorAll('.btn-edit-prod').forEach(btn => {
-                btn.onclick = () => openEditModal(btn.getAttribute('data-prodid'));
+                btn.onclick = () => openEditProductModal(btn.getAttribute('data-prodid'));
             });
 
             document.querySelectorAll('.btn-del-prod').forEach(btn => {
@@ -314,12 +333,8 @@
                 renderCart(); 
             };
 
-            // Modales
-            document.getElementById('btn-open-cat-modal').onclick = () => {
-                document.getElementById('category-modal').classList.remove('hidden');
-                document.getElementById('category-modal').classList.add('flex');
-            };
-
+            // MODAL CATÁLOGO
+            document.getElementById('btn-open-cat-modal').onclick = () => openEditCategoryModal(null);
             const closeCat = () => {
                 document.getElementById('category-modal').classList.add('hidden');
                 document.getElementById('category-modal').classList.remove('flex');
@@ -327,20 +342,52 @@
             document.getElementById('btn-close-cat').onclick = closeCat;
             document.getElementById('btn-cancel-cat').onclick = closeCat;
 
-            document.getElementById('category-form').onsubmit = async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('cat-name').value.trim();
-                if (!name) return;
-                const id = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-
-                await saveCategoryToFirebase({ id: id, name: name });
-                closeCat();
-                renderAll();
-                window.showToast('Catálogo subido a Firebase');
+            document.getElementById('cat-image-file').onchange = (e) => {
+                selectedCatFile = e.target.files[0];
+                if (selectedCatFile) {
+                    const preview = document.getElementById('cat-image-preview');
+                    preview.src = URL.createObjectURL(selectedCatFile);
+                    preview.classList.remove('hidden');
+                }
             };
 
-            document.getElementById('btn-open-prod-modal').onclick = () => openEditModal(null);
+            document.getElementById('category-form').onsubmit = async (e) => {
+                e.preventDefault();
+                const btnSubmit = document.getElementById('btn-submit-cat');
+                btnSubmit.disabled = true;
+                btnSubmit.textContent = 'Guardando...';
 
+                try {
+                    const name = document.getElementById('cat-name').value.trim();
+                    const subtitle = document.getElementById('cat-subtitle').value.trim();
+                    const existingId = document.getElementById('cat-id').value;
+                    const id = existingId || name.toLowerCase().replace(/[^a-z0-9]/g, '');
+
+                    let imageUrl = document.getElementById('cat-image-url').value;
+                    if (selectedCatFile) {
+                        imageUrl = await uploadImageToStorage(selectedCatFile, 'categorias');
+                    }
+
+                    await saveCategoryToFirebase({ 
+                        id: id, 
+                        name: name, 
+                        subtitle: subtitle, 
+                        image: imageUrl || 'assets/imagenes/producto (1).jpg' 
+                    });
+
+                    closeCat();
+                    renderAll();
+                    window.showToast('Catálogo guardado en Firebase');
+                } catch (err) {
+                    alert('Error al guardar catálogo: ' + err.message);
+                } finally {
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = 'Guardar Catálogo';
+                }
+            };
+
+            // MODAL PRODUCTO
+            document.getElementById('btn-open-prod-modal').onclick = () => openEditProductModal(null);
             const closeProd = () => {
                 document.getElementById('edit-product-modal').classList.add('hidden');
                 document.getElementById('edit-product-modal').classList.remove('flex');
@@ -348,22 +395,15 @@
             document.getElementById('btn-close-prod').onclick = closeProd;
             document.getElementById('btn-cancel-prod').onclick = closeProd;
 
-            // Formato de texto
-            document.getElementById('btn-bold').onclick = () => document.execCommand('bold', false, null);
-            document.getElementById('btn-italic').onclick = () => document.execCommand('italic', false, null);
-            document.getElementById('btn-underline').onclick = () => document.execCommand('underline', false, null);
-
-            // Previsualización de imagen
             document.getElementById('form-image-file').onchange = (e) => {
-                selectedFile = e.target.files[0];
-                if (selectedFile) {
+                selectedProductFile = e.target.files[0];
+                if (selectedProductFile) {
                     const preview = document.getElementById('image-preview');
-                    preview.src = URL.createObjectURL(selectedFile);
+                    preview.src = URL.createObjectURL(selectedProductFile);
                     preview.classList.remove('hidden');
                 }
             };
 
-            // Enviar formulario de producto
             document.getElementById('product-form').onsubmit = async (e) => {
                 e.preventDefault();
                 const btnSubmit = document.getElementById('btn-submit-prod');
@@ -372,8 +412,8 @@
 
                 try {
                     let imageUrl = document.getElementById('form-image-url').value;
-                    if (selectedFile) {
-                        imageUrl = await uploadImageToStorage(selectedFile);
+                    if (selectedProductFile) {
+                        imageUrl = await uploadImageToStorage(selectedProductFile, 'productos');
                     }
 
                     const id = document.getElementById('form-id').value || 'prod-' + Date.now();
@@ -406,8 +446,29 @@
             };
         }
 
-        function openEditModal(id) {
-            selectedFile = null;
+        function openEditCategoryModal(id) {
+            selectedCatFile = null;
+            const c = id ? BMAX_CATEGORIES.find(item => item.id === id) : null;
+
+            document.getElementById('cat-id').value = c ? c.id : '';
+            document.getElementById('cat-name').value = c ? c.name : '';
+            document.getElementById('cat-subtitle').value = c ? (c.subtitle || '') : '';
+            document.getElementById('cat-image-url').value = c ? (c.image || '') : '';
+
+            const preview = document.getElementById('cat-image-preview');
+            preview.src = c ? (c.image || 'assets/imagenes/producto (1).jpg') : '';
+            if (c && c.image) preview.classList.remove('hidden');
+            else preview.classList.add('hidden');
+
+            document.getElementById('cat-modal-title').textContent = c ? 'Editar Catálogo' : 'Crear Nuevo Catálogo';
+
+            const modal = document.getElementById('category-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function openEditProductModal(id) {
+            selectedProductFile = null;
             const p = id ? BMAX_PRODUCTS.find(item => item.id === id) : null;
 
             document.getElementById('form-id').value = p ? p.id : '';
