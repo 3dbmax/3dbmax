@@ -260,51 +260,94 @@
     <!-- Scripts Globales -->
     <script src="assets/app.js"></script>
 
-    <!-- Script de Gestión e Integración Robusta del Carrito -->
-    <script type="module">
-        import { formatPrice } from './assets/products.js';
+    <!-- Script de Diagnóstico con Logs y Carga Multiclave -->
+    <script>
+        console.log("🚀 [B-Max Carrito] Inicializando script de carrito...");
 
-        // Helper para leer/escribir el carrito
-        function getCart() {
+        // Función formateadora local por si falla el modulo
+        function localFormatPrice(price) {
             try {
-                return JSON.parse(localStorage.getItem('bmax_cart')) || [];
+                return new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 }).format(price);
             } catch (e) {
-                return [];
+                return '$' + price;
             }
         }
 
-        function saveCart(cart) {
-            localStorage.setItem('bmax_cart', JSON.stringify(cart));
-            if (window.updateCartBadge) window.updateCartBadge();
+        // Búsqueda inteligente del carrito en todas las posibles claves de localStorage
+        function getCartMultiKey() {
+            const possibleKeys = ['bmax_cart', 'bmax_cart_items', 'cart', 'bmax_carrito'];
+            console.log("🔍 [B-Max Carrito] Buscando carrito en localStorage...");
+
+            for (const key of possibleKeys) {
+                const raw = localStorage.getItem(key);
+                console.log(` -> Clave "${key}":`, raw ? raw : "(vacía)");
+                if (raw) {
+                    try {
+                        const parsed = JSON.parse(raw);
+                        if (Array.isArray(parsed) && parsed.length > 0) {
+                            console.log(`✅ [B-Max Carrito] Carrito encontrado en clave "${key}" con ${parsed.length} productos!`, parsed);
+                            return { keyUsed: key, items: parsed };
+                        }
+                    } catch (err) {
+                        console.error(`❌ [B-Max Carrito] Error al parsear clave "${key}":`, err);
+                    }
+                }
+            }
+
+            console.warn("⚠️ [B-Max Carrito] No se encontró ningún producto en las claves buscadas.");
+            return { keyUsed: 'bmax_cart', items: [] };
+        }
+
+        function saveCartMultiKey(cart, keyToUse) {
+            const key = keyToUse || 'bmax_cart';
+            console.log(`💾 [B-Max Carrito] Guardando ${cart.length} productos en localStorage under "${key}"...`);
+            localStorage.setItem(key, JSON.stringify(cart));
+            
+            // Sincronizar clave secundaria para que app.js no se desincronice
+            localStorage.setItem('bmax_cart_items', JSON.stringify(cart));
+            
+            if (window.updateCartBadge) {
+                window.updateCartBadge();
+            }
         }
 
         function renderCartPage() {
-            const cart = getCart();
+            console.log("🎨 [B-Max Carrito] Ejecutando renderCartPage()...");
+            const { keyUsed, items: cart } = getCartMultiKey();
+
             const contentEl = document.getElementById('cart-content');
             const emptyEl = document.getElementById('cart-empty');
             const container = document.getElementById('cart-items-container');
 
             if (!cart || cart.length === 0) {
+                console.log("ℹ️ [B-Max Carrito] El carrito está vacío. Mostrando vista vacía.");
                 contentEl.classList.add('hidden');
                 emptyEl.classList.remove('hidden');
                 return;
             }
 
+            console.log(`✨ [B-Max Carrito] Dibujando ${cart.length} productos en pantalla...`);
             contentEl.classList.remove('hidden');
             emptyEl.classList.add('hidden');
 
             container.innerHTML = cart.map((item, index) => {
                 const itemId = item.id || `cart-item-${index}`;
-                const priceFormatted = typeof formatPrice === 'function' ? formatPrice(item.price) : `$${item.price}`;
-                const totalItemFormatted = typeof formatPrice === 'function' ? formatPrice(item.price * item.quantity) : `$${item.price * item.quantity}`;
+                const rawPrice = Number(item.price) || 0;
+                const rawQty = Number(item.quantity) || 1;
                 
+                const priceFormatted = localFormatPrice(rawPrice);
+                const totalItemFormatted = localFormatPrice(rawPrice * rawQty);
+                const itemImg = item.image || item.img || 'assets/imagenes/producto (1).jpg';
+                const itemName = item.name || item.nombre || 'Producto 3D';
+                const itemCat = item.categoryName || item.category || 'Categoría';
+
                 return `
                     <div class="py-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                         <div class="flex items-center gap-4 w-full sm:w-auto">
-                            <img src="${item.image || 'assets/imagenes/producto (1).jpg'}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-brand-beige shrink-0 border border-brand-border/60" />
+                            <img src="${itemImg}" alt="${itemName}" class="w-16 h-16 object-cover rounded-xl bg-brand-beige shrink-0 border border-brand-border/60" />
                             <div>
-                                <span class="text-[9px] font-bold tracking-wider text-brand-subtext uppercase">${item.categoryName || item.category || 'Producto'}</span>
-                                <h4 class="text-sm font-semibold text-brand-dark">${item.name}</h4>
+                                <span class="text-[9px] font-bold tracking-wider text-brand-subtext uppercase">${itemCat}</span>
+                                <h4 class="text-sm font-semibold text-brand-dark">${itemName}</h4>
                                 <span class="text-xs font-medium text-brand-subtext">${priceFormatted} c/u</span>
                             </div>
                         </div>
@@ -313,7 +356,7 @@
                             <!-- Selector Cantidad -->
                             <div class="flex items-center border border-brand-border rounded-full bg-white px-2.5 py-1">
                                 <button data-action="qty-minus" data-id="${itemId}" class="btn-qty text-brand-dark hover:text-brand-tan px-2 font-bold text-xs">-</button>
-                                <span class="px-2 text-xs font-semibold min-w-[20px] text-center">${item.quantity}</span>
+                                <span class="px-2 text-xs font-semibold min-w-[20px] text-center">${rawQty}</span>
                                 <button data-action="qty-plus" data-id="${itemId}" class="btn-qty text-brand-dark hover:text-brand-tan px-2 font-bold text-xs">+</button>
                             </div>
 
@@ -333,27 +376,29 @@
                 `;
             }).join('');
 
-            setupItemListeners();
-            updateCartTotals();
+            setupItemListeners(keyUsed);
+            updateCartTotals(cart);
         }
 
-        function setupItemListeners() {
+        function setupItemListeners(keyUsed) {
             document.querySelectorAll('.btn-qty').forEach(btn => {
                 btn.onclick = () => {
                     const id = btn.getAttribute('data-id');
                     const action = btn.getAttribute('data-action');
-                    let cart = getCart();
+                    let { items: cart } = getCartMultiKey();
+                    
                     const item = cart.find((i, idx) => (i.id || `cart-item-${idx}`) === id);
                     if (item) {
                         if (action === 'qty-plus') {
-                            item.quantity += 1;
+                            item.quantity = (Number(item.quantity) || 1) + 1;
                         } else if (action === 'qty-minus') {
-                            item.quantity -= 1;
+                            item.quantity = (Number(item.quantity) || 1) - 1;
                             if (item.quantity <= 0) {
                                 cart = cart.filter((i, idx) => (i.id || `cart-item-${idx}`) !== id);
                             }
                         }
-                        saveCart(cart);
+                        console.log(`🔄 [B-Max Carrito] Cantidad actualizada para item ${id}:`, item.quantity);
+                        saveCartMultiKey(cart, keyUsed);
                         renderCartPage();
                     }
                 };
@@ -362,34 +407,41 @@
             document.querySelectorAll('.btn-remove-item').forEach(btn => {
                 btn.onclick = () => {
                     const id = btn.getAttribute('data-id');
-                    let cart = getCart();
+                    let { items: cart } = getCartMultiKey();
+                    console.log(`🗑️ [B-Max Carrito] Eliminando item ${id}...`);
                     cart = cart.filter((i, idx) => (i.id || `cart-item-${idx}`) !== id);
-                    saveCart(cart);
+                    saveCartMultiKey(cart, keyUsed);
                     renderCartPage();
                 };
             });
         }
 
-        function updateCartTotals() {
-            const cart = getCart();
-            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            const formattedSubtotal = typeof formatPrice === 'function' ? formatPrice(subtotal) : `$${subtotal}`;
+        function updateCartTotals(cartParam) {
+            const cart = cartParam || getCartMultiKey().items;
+            const subtotal = cart.reduce((acc, item) => acc + ((Number(item.price) || 0) * (Number(item.quantity) || 1)), 0);
+            const formattedSubtotal = localFormatPrice(subtotal);
+
+            console.log(`💰 [B-Max Carrito] Subtotal calculado:`, formattedSubtotal);
 
             document.getElementById('summary-subtotal').textContent = formattedSubtotal;
             document.getElementById('summary-total').textContent = formattedSubtotal;
         }
 
         function checkoutViaWhatsApp() {
-            const cart = getCart();
+            const { items: cart } = getCartMultiKey();
             if (cart.length === 0) return;
 
-            const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            const formattedTotal = typeof formatPrice === 'function' ? formatPrice(subtotal) : `$${subtotal}`;
+            const subtotal = cart.reduce((acc, item) => acc + ((Number(item.price) || 0) * (Number(item.quantity) || 1)), 0);
+            const formattedTotal = localFormatPrice(subtotal);
 
             let msg = `*¡Hola B-Max Impresión 3D! Quisiera hacer el pedido de estos productos:*\n\n`;
             cart.forEach((item, index) => {
-                const itemTotal = typeof formatPrice === 'function' ? formatPrice(item.price * item.quantity) : `$${item.price * item.quantity}`;
-                msg += `${index + 1}. *${item.name}* x ${item.quantity}u - ${itemTotal}\n`;
+                const itemQty = Number(item.quantity) || 1;
+                const itemPrice = Number(item.price) || 0;
+                const itemTotal = localFormatPrice(itemPrice * itemQty);
+                const itemName = item.name || item.nombre || 'Producto';
+                
+                msg += `${index + 1}. *${itemName}* x ${itemQty}u - ${itemTotal}\n`;
             });
 
             msg += `\n*TOTAL APROXIMADO:* ${formattedTotal}`;
@@ -398,20 +450,31 @@
 
             const phone = "5492622527982";
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+            console.log("📲 [B-Max Carrito] Abriendo enlace de WhatsApp:", url);
             window.open(url, '_blank');
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('btn-clear-cart-page').onclick = () => {
-                if (confirm('¿Vaciar todo el carrito?')) {
-                    saveCart([]);
-                    renderCartPage();
-                }
-            };
+            console.log("📌 [B-Max Carrito] Evento DOMContentLoaded disparado.");
 
-            document.getElementById('btn-whatsapp-checkout').onclick = checkoutViaWhatsApp;
+            const btnClear = document.getElementById('btn-clear-cart-page');
+            if (btnClear) {
+                btnClear.onclick = () => {
+                    if (confirm('¿Vaciar todo el carrito?')) {
+                        console.log("🧹 [B-Max Carrito] Vaciando carrito...");
+                        const { keyUsed } = getCartMultiKey();
+                        saveCartMultiKey([], keyUsed);
+                        renderCartPage();
+                    }
+                };
+            }
 
-            // Renderizar los productos almacenados en el carrito
+            const btnCheckout = document.getElementById('btn-whatsapp-checkout');
+            if (btnCheckout) {
+                btnCheckout.onclick = checkoutViaWhatsApp;
+            }
+
+            // Renderizar inmediatamente
             renderCartPage();
         });
     </script>
