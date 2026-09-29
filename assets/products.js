@@ -20,22 +20,20 @@ const firebaseConfig = {
     measurementId: "G-305Y8X0LXQ"
 };
 
-// Inicializar Firebase
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
 
-// Categorías por defecto para la primera siembra
+// Categorías base con imagen y descripción
 const BASE_CATEGORIES = [
-    { id: 'todos', name: 'Todos' },
-    { id: 'organizacion', name: 'Organización' },
-    { id: 'decoracion', name: 'Decoración' },
-    { id: 'accesorios', name: 'Accesorios' },
-    { id: 'juguetes', name: 'Juguetes y Figuras' },
-    { id: 'personalizados', name: 'Personalizados' }
+    { id: 'todos', name: 'Todos', image: '', subtitle: 'Ver todo el catálogo' },
+    { id: 'organizacion', name: 'Organización', image: 'assets/imagenes/producto (1).jpg', subtitle: 'Funcionalidad en tu espacio' },
+    { id: 'decoracion', name: 'Decoración', image: 'assets/imagenes/producto (2).jpg', subtitle: 'Detalles que hacen la diferencia' },
+    { id: 'accesorios', name: 'Accesorios', image: 'assets/imagenes/producto (3).jpg', subtitle: 'Llevá tu estilo a otro nivel' },
+    { id: 'juguetes', name: 'Juguetes y Figuras', image: 'assets/imagenes/producto (4).jpg', subtitle: 'Imaginación sin límites' },
+    { id: 'personalizados', name: 'Personalizados', image: 'assets/imagenes/producto (5).jpg', subtitle: 'Tu idea, nuestro diseño' }
 ];
 
-// Productos por defecto para la primera siembra
 const BASE_PRODUCTS = [
     {
         id: 'org-01',
@@ -45,43 +43,16 @@ const BASE_PRODUCTS = [
         price: 9500,
         image: 'assets/imagenes/producto (1).jpg',
         shortDesc: 'Portalápices con compartimentos escalonados para escritorio.',
-        desc: 'Diseñado para mantener tu espacio de trabajo impecable. Cuenta con 3 cavidades independientes.',
+        desc: 'Diseñado para mantener tu espacio de trabajo impecable.',
         dimensions: '12 x 10 x 9 cm',
         material: 'PLA Premium ecológico',
-        colors: ['Beige Nórdico', 'Negro Mate', 'Gris Cemento', 'Blanco Hueso']
-    },
-    {
-        id: 'org-02',
-        name: 'Soporte Ergonómico para Celular y Tablet',
-        category: 'organizacion',
-        categoryName: 'Organización',
-        price: 6800,
-        image: 'assets/imagenes/producto (2).jpg',
-        shortDesc: 'Ángulo óptimo de visualización con ranura pasacable.',
-        desc: 'Ideal para videollamadas, ver contenido o tener en el escritorio mientras cargás tu dispositivo.',
-        dimensions: '8 x 7 x 9 cm',
-        material: 'PLA de alta resistencia',
-        colors: ['Negro Mate', 'Cobre', 'Blanco']
-    },
-    {
-        id: 'dec-01',
-        name: 'Maceta Geométrica Facetada con Plato',
-        category: 'decoracion',
-        categoryName: 'Decoración',
-        price: 8400,
-        image: 'assets/imagenes/producto (4).jpg',
-        shortDesc: 'Ideal para suculentas y cactus con sistema de drenaje.',
-        desc: 'Inspirada en el origami y la geometría fractal. Aporta calidez y estilo nórdico a cualquier ambiente.',
-        dimensions: '10 x 10 x 9 cm',
-        material: 'PLA con acabado cerámico suave',
-        colors: ['Blanco Puro', 'Mármol Texturado', 'Crema', 'Verde Salvia']
+        colors: ['Beige Nórdico', 'Negro Mate']
     }
 ];
 
 export let BMAX_CATEGORIES = [];
 export let BMAX_PRODUCTS = [];
 
-// Sincronización automática con Firestore (crea colecciones si están vacías)
 export async function syncFirebaseData() {
     try {
         const catSnapshot = await getDocs(collection(db, "categorias"));
@@ -108,14 +79,12 @@ export async function syncFirebaseData() {
     }
 }
 
-// Subir imágenes directamente a Firebase Storage
-export async function uploadImageToStorage(file) {
-    const fileRef = ref(storage, `productos/${Date.now()}_${file.name}`);
+export async function uploadImageToStorage(file, folder = 'productos') {
+    const fileRef = ref(storage, `${folder}/${Date.now()}_${file.name}`);
     await uploadBytes(fileRef, file);
     return await getDownloadURL(fileRef);
 }
 
-// Operaciones en la Nube
 export async function saveProductToFirebase(product) {
     await setDoc(doc(db, "productos", product.id), product);
     await syncFirebaseData();
