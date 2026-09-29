@@ -35,6 +35,9 @@
             }
         }
     </script>
+
+    <!-- JS Global tradicional (Carrito, Modales, Header) -->
+    <script src="assets/app.js"></script>
 </head>
 <body class="font-sans text-brand-text bg-brand-beige min-h-screen flex flex-col justify-between selection:bg-brand-tan selection:text-brand-dark">
 
@@ -127,18 +130,17 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS MÓDULOS -->
+    <!-- SCRIPTS MÓDULO DE FIREBASE -->
     <script type="module">
         import { syncFirebaseData, BMAX_CATEGORIES, BMAX_PRODUCTS, formatPrice } from './assets/products.js';
-        import { addToCart } from './assets/app.js';
 
         let selectedCategory = 'todos';
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Sincronizar y hacer la siembra automática en Firebase si la base está vacía
+            // Sincronizar productos y categorías con Firestore
             await syncFirebaseData();
 
-            // Leer parámetro de URL si viene desde otra página (ej: ?cat=decoracion o ?q=maceta)
+            // Leer parámetro de URL si viene desde index.html (ej: ?cat=organizacion)
             const urlParams = new URLSearchParams(window.location.search);
             const catParam = urlParams.get('cat');
             if (catParam) selectedCategory = catParam;
@@ -184,7 +186,7 @@
                 list = list.filter(p => p.category === selectedCategory);
             }
 
-            // Filtrar por texto de búsqueda si viene un parámetro 'q'
+            // Filtrar por texto si viene una búsqueda
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
                 list = list.filter(p => p.name.toLowerCase().includes(q) || (p.shortDesc && p.shortDesc.toLowerCase().includes(q)));
@@ -193,7 +195,7 @@
             if (list.length === 0) {
                 container.innerHTML = `
                     <div class="col-span-full text-center py-12 text-brand-subtext font-light text-sm bg-white rounded-2xl border border-brand-border">
-                        No se encontraron productos disponibles en esta sección.
+                        No hay productos guardados en esta categoría todavía.
                     </div>
                 `;
                 return;
@@ -218,12 +220,14 @@
                 </div>
             `).join('');
 
-            // Event listener para agregar al carrito
+            // Evento para agregar al carrito
             document.querySelectorAll('.btn-add-cart').forEach(btn => {
                 btn.onclick = () => {
                     const id = btn.getAttribute('data-prodid');
                     const product = BMAX_PRODUCTS.find(p => p.id === id);
-                    if (product) addToCart(product);
+                    if (product && window.addToCart) {
+                        window.addToCart(product);
+                    }
                 };
             });
         }
