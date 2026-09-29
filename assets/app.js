@@ -12,11 +12,11 @@ const ADMIN_USER = 'Cami';
 const ADMIN_PASS = 'Cami1144';
 
 // Verificar sesión
-export function isAdminLoggedIn() {
+function isAdminLoggedIn() {
     return localStorage.getItem(ADMIN_SESSION_KEY) === 'true';
 }
 
-export function loginAdmin(user, pass) {
+function loginAdmin(user, pass) {
     if (user === ADMIN_USER && pass === ADMIN_PASS) {
         localStorage.setItem(ADMIN_SESSION_KEY, 'true');
         showToast('¡Bienvenido/a Cami! Modo administrador activado.');
@@ -30,7 +30,7 @@ export function loginAdmin(user, pass) {
     }
 }
 
-export function logoutAdmin() {
+function logoutAdmin() {
     localStorage.removeItem(ADMIN_SESSION_KEY);
     showToast('Sesión de administración cerrada.');
     setTimeout(() => {
@@ -39,7 +39,7 @@ export function logoutAdmin() {
 }
 
 // Renderizar Botón Login / Admin en Header
-export function renderHeaderAdminBtn() {
+function renderHeaderAdminBtn() {
     const actionContainers = document.querySelectorAll('header .shrink-0.flex.items-center.gap-5');
     
     actionContainers.forEach(container => {
@@ -71,7 +71,7 @@ export function renderHeaderAdminBtn() {
 }
 
 // Modal de Login
-export function openLoginModal() {
+function openLoginModal() {
     let modal = document.getElementById('login-modal');
     if (!modal) {
         modal = document.createElement('div');
@@ -112,7 +112,7 @@ export function openLoginModal() {
     modal.classList.add('flex');
 }
 
-export function closeLoginModal() {
+function closeLoginModal() {
     const modal = document.getElementById('login-modal');
     if (modal) {
         modal.classList.add('hidden');
@@ -120,7 +120,7 @@ export function closeLoginModal() {
     }
 }
 
-export function handleLoginSubmit(e) {
+function handleLoginSubmit(e) {
     e.preventDefault();
     const user = document.getElementById('login-user').value.trim();
     const pass = document.getElementById('login-pass').value.trim();
@@ -130,7 +130,7 @@ export function handleLoginSubmit(e) {
 }
 
 // LocalStorage Carrito
-export function getCart() {
+function getCart() {
     try {
         const cart = localStorage.getItem(CART_STORAGE_KEY);
         return cart ? JSON.parse(cart) : [];
@@ -139,7 +139,7 @@ export function getCart() {
     }
 }
 
-export function saveCart(cart) {
+function saveCart(cart) {
     try {
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
         updateCartBadge();
@@ -148,7 +148,7 @@ export function saveCart(cart) {
     }
 }
 
-export function addToCart(product) {
+function addToCart(product) {
     const cart = getCart();
     const existingIndex = cart.findIndex(item => item.id === product.id);
 
@@ -169,7 +169,7 @@ export function addToCart(product) {
     showToast(`"${product.name}" se agregó al carrito.`);
 }
 
-export function updateCartQuantity(id, delta) {
+function updateCartQuantity(id, delta) {
     let cart = getCart();
     const item = cart.find(item => item.id === id);
     if (!item) return;
@@ -179,19 +179,19 @@ export function updateCartQuantity(id, delta) {
     saveCart(cart);
 }
 
-export function removeFromCart(id) {
+function removeFromCart(id) {
     let cart = getCart();
     cart = cart.filter(item => item.id !== id);
     saveCart(cart);
     showToast('Producto eliminado del carrito.');
 }
 
-export function clearCart() {
+function clearCart() {
     localStorage.removeItem(CART_STORAGE_KEY);
     updateCartBadge();
 }
 
-export function updateCartBadge() {
+function updateCartBadge() {
     const badges = document.querySelectorAll('.cart-badge');
     const cart = getCart();
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -207,7 +207,7 @@ export function updateCartBadge() {
     });
 }
 
-export function showToast(message) {
+function showToast(message) {
     let toast = document.getElementById('bmax-toast');
     if (!toast) {
         toast = document.createElement('div');
@@ -234,7 +234,7 @@ export function showToast(message) {
 }
 
 // Búsqueda
-export function openSearchModal() {
+function openSearchModal() {
     let modal = document.getElementById('search-modal');
     if (!modal) {
         modal = document.createElement('div');
@@ -272,30 +272,24 @@ export function openSearchModal() {
     modal.classList.remove('hidden');
 }
 
-export function closeSearchModal() {
+function closeSearchModal() {
     const modal = document.getElementById('search-modal');
     if (modal) modal.classList.add('hidden');
 }
 
-export function executeSearch() {
+function executeSearch() {
     const query = document.getElementById('search-input')?.value.trim();
     if (query) {
         window.location.href = `productos.html?q=${encodeURIComponent(query)}`;
     }
 }
 
-export function toggleMobileMenu() {
+function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     if (menu) menu.classList.toggle('hidden');
 }
 
-// Exponer funciones necesarias en el ámbito global de window
-window.renderHeaderAdminBtn = renderHeaderAdminBtn;
-window.openLoginModal = openLoginModal;
-window.closeLoginModal = closeLoginModal;
-window.isAdminLoggedIn = isAdminLoggedIn;
-
-// Inicialización automática y segura de la UI
+// Inicialización automática de la interfaz
 function initAppUI() {
     updateCartBadge();
     renderHeaderAdminBtn();
