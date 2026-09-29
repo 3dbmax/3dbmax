@@ -12,11 +12,11 @@ const ADMIN_USER = 'Cami';
 const ADMIN_PASS = 'Cami1144';
 
 // Verificar sesión
-function isAdminLoggedIn() {
+export function isAdminLoggedIn() {
     return localStorage.getItem(ADMIN_SESSION_KEY) === 'true';
 }
 
-function loginAdmin(user, pass) {
+export function loginAdmin(user, pass) {
     if (user === ADMIN_USER && pass === ADMIN_PASS) {
         localStorage.setItem(ADMIN_SESSION_KEY, 'true');
         showToast('¡Bienvenido/a Cami! Modo administrador activado.');
@@ -30,7 +30,7 @@ function loginAdmin(user, pass) {
     }
 }
 
-function logoutAdmin() {
+export function logoutAdmin() {
     localStorage.removeItem(ADMIN_SESSION_KEY);
     showToast('Sesión de administración cerrada.');
     setTimeout(() => {
@@ -39,7 +39,7 @@ function logoutAdmin() {
 }
 
 // Renderizar Botón Login / Admin en Header
-function renderHeaderAdminBtn() {
+export function renderHeaderAdminBtn() {
     const actionContainers = document.querySelectorAll('header .shrink-0.flex.items-center.gap-5');
     
     actionContainers.forEach(container => {
@@ -71,7 +71,7 @@ function renderHeaderAdminBtn() {
 }
 
 // Modal de Login
-function openLoginModal() {
+export function openLoginModal() {
     let modal = document.getElementById('login-modal');
     if (!modal) {
         modal = document.createElement('div');
@@ -79,12 +79,12 @@ function openLoginModal() {
         modal.className = 'fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4';
         modal.innerHTML = `
             <div class="bg-[#F8F5F2] w-full max-w-sm rounded-3xl p-6 shadow-2xl border border-[#E3DDD5] relative animate-in fade-in zoom-in duration-200">
-                <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black text-xl leading-none">&times;</button>
+                <button id="btn-close-login" class="absolute top-4 right-4 text-gray-400 hover:text-black text-xl leading-none">&times;</button>
                 <div class="text-center mb-6">
                     <span class="text-[10px] font-bold tracking-[0.2em] text-[#766B63] uppercase">Acceso Restringido</span>
                     <h3 class="text-xl font-light text-[#2B221B] mt-1">Ingreso Administrador</h3>
                 </div>
-                <form id="login-form" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                <form id="login-form" class="space-y-4">
                     <div>
                         <label class="block text-xs font-semibold text-[#2B221B] mb-1">Usuario</label>
                         <input type="text" id="login-user" required placeholder="Ingresá tu usuario" class="w-full bg-white border border-[#E3DDD5] rounded-xl px-4 py-2.5 text-xs text-[#2B221B] focus:outline-none focus:border-[#CFAD91]" />
@@ -101,15 +101,18 @@ function openLoginModal() {
         `;
         document.body.appendChild(modal);
 
+        document.getElementById('btn-close-login').onclick = closeLoginModal;
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeLoginModal();
         });
+
+        document.getElementById('login-form').onsubmit = handleLoginSubmit;
     }
     modal.classList.remove('hidden');
     modal.classList.add('flex');
 }
 
-function closeLoginModal() {
+export function closeLoginModal() {
     const modal = document.getElementById('login-modal');
     if (modal) {
         modal.classList.add('hidden');
@@ -117,7 +120,7 @@ function closeLoginModal() {
     }
 }
 
-function handleLoginSubmit(e) {
+export function handleLoginSubmit(e) {
     e.preventDefault();
     const user = document.getElementById('login-user').value.trim();
     const pass = document.getElementById('login-pass').value.trim();
@@ -127,7 +130,7 @@ function handleLoginSubmit(e) {
 }
 
 // LocalStorage Carrito
-function getCart() {
+export function getCart() {
     try {
         const cart = localStorage.getItem(CART_STORAGE_KEY);
         return cart ? JSON.parse(cart) : [];
@@ -136,7 +139,7 @@ function getCart() {
     }
 }
 
-function saveCart(cart) {
+export function saveCart(cart) {
     try {
         localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
         updateCartBadge();
@@ -145,7 +148,7 @@ function saveCart(cart) {
     }
 }
 
-function addToCart(product) {
+export function addToCart(product) {
     const cart = getCart();
     const existingIndex = cart.findIndex(item => item.id === product.id);
 
@@ -164,10 +167,9 @@ function addToCart(product) {
 
     saveCart(cart);
     showToast(`"${product.name}" se agregó al carrito.`);
-    if (typeof renderCartPage === 'function') renderCartPage();
 }
 
-function updateCartQuantity(id, delta) {
+export function updateCartQuantity(id, delta) {
     let cart = getCart();
     const item = cart.find(item => item.id === id);
     if (!item) return;
@@ -175,26 +177,21 @@ function updateCartQuantity(id, delta) {
     item.quantity += delta;
     if (item.quantity <= 0) cart = cart.filter(i => i.id !== id);
     saveCart(cart);
-
-    if (typeof renderCartPage === 'function') renderCartPage();
 }
 
-function removeFromCart(id) {
+export function removeFromCart(id) {
     let cart = getCart();
     cart = cart.filter(item => item.id !== id);
     saveCart(cart);
     showToast('Producto eliminado del carrito.');
-
-    if (typeof renderCartPage === 'function') renderCartPage();
 }
 
-function clearCart() {
+export function clearCart() {
     localStorage.removeItem(CART_STORAGE_KEY);
     updateCartBadge();
-    if (typeof renderCartPage === 'function') renderCartPage();
 }
 
-function updateCartBadge() {
+export function updateCartBadge() {
     const badges = document.querySelectorAll('.cart-badge');
     const cart = getCart();
     const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -210,7 +207,7 @@ function updateCartBadge() {
     });
 }
 
-function showToast(message) {
+export function showToast(message) {
     let toast = document.getElementById('bmax-toast');
     if (!toast) {
         toast = document.createElement('div');
@@ -237,7 +234,7 @@ function showToast(message) {
 }
 
 // Búsqueda
-function openSearchModal() {
+export function openSearchModal() {
     let modal = document.getElementById('search-modal');
     if (!modal) {
         modal = document.createElement('div');
@@ -247,17 +244,20 @@ function openSearchModal() {
             <div class="bg-[#F8F5F2] w-full max-w-xl rounded-2xl p-6 shadow-2xl border border-[#E3DDD5] relative animate-in fade-in zoom-in duration-200">
                 <div class="flex items-center justify-between pb-4 border-b border-[#E3DDD5]">
                     <h3 class="text-sm font-semibold tracking-wider text-[#2B221B] uppercase">Buscar en B-Max</h3>
-                    <button onclick="closeSearchModal()" class="text-gray-400 hover:text-black p-1 text-lg leading-none">&times;</button>
+                    <button id="btn-close-search" class="text-gray-400 hover:text-black p-1 text-lg leading-none">&times;</button>
                 </div>
                 <div class="mt-4 relative">
                     <input type="text" id="search-input" placeholder="Ej: maceta, organizador, llavero..." class="w-full bg-white border border-[#E3DDD5] rounded-full px-5 py-3 text-sm text-[#2B221B] focus:outline-none focus:border-[#CFAD91] shadow-inner" />
-                    <button onclick="executeSearch()" class="absolute right-2 top-2 bg-[#CFAD91] hover:bg-[#C29E80] text-[#2B221B] font-semibold text-xs px-4 py-2 rounded-full uppercase tracking-wider transition-colors">
+                    <button id="btn-execute-search" class="absolute right-2 top-2 bg-[#CFAD91] hover:bg-[#C29E80] text-[#2B221B] font-semibold text-xs px-4 py-2 rounded-full uppercase tracking-wider transition-colors">
                         Buscar
                     </button>
                 </div>
             </div>
         `;
         document.body.appendChild(modal);
+
+        document.getElementById('btn-close-search').onclick = closeSearchModal;
+        document.getElementById('btn-execute-search').onclick = executeSearch;
 
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeSearchModal();
@@ -272,19 +272,19 @@ function openSearchModal() {
     modal.classList.remove('hidden');
 }
 
-function closeSearchModal() {
+export function closeSearchModal() {
     const modal = document.getElementById('search-modal');
     if (modal) modal.classList.add('hidden');
 }
 
-function executeSearch() {
+export function executeSearch() {
     const query = document.getElementById('search-input')?.value.trim();
     if (query) {
         window.location.href = `productos.html?q=${encodeURIComponent(query)}`;
     }
 }
 
-function toggleMobileMenu() {
+export function toggleMobileMenu() {
     const menu = document.getElementById('mobile-menu');
     if (menu) menu.classList.toggle('hidden');
 }
