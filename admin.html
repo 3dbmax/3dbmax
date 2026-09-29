@@ -129,7 +129,7 @@
                     <label class="block text-xs font-bold text-brand-dark">Imagen de Portada</label>
 
                     <div>
-                        <span class="text-[10px] text-brand-subtext font-semibold block mb-1">Opción A: Reutilizar foto de un producto</span>
+                        <span class="text-[10px] text-brand-subtext font-semibold block mb-1">Opción A: Reutilizar foto existente (Productos / Catálogos)</span>
                         <select id="cat-image-select" class="w-full bg-brand-beige/40 border border-brand-border rounded-xl px-3 py-2 text-xs text-brand-dark focus:outline-none">
                             <option value="">-- Seleccionar imagen existente --</option>
                         </select>
@@ -283,19 +283,36 @@
 
         function populateExistingImagesDropdowns() {
             const uniqueImages = [];
+
+            // 1. Recolectar imágenes de productos
             BMAX_PRODUCTS.forEach(p => {
                 if (p.image && !uniqueImages.some(item => item.url === p.image)) {
-                    uniqueImages.push({ name: p.name, url: p.image });
+                    uniqueImages.push({ name: `Producto: ${p.name}`, url: p.image });
                 }
             });
 
+            // 2. Recolectar imágenes de categorías
+            BMAX_CATEGORIES.forEach(c => {
+                if (c.image && !uniqueImages.some(item => item.url === c.image)) {
+                    uniqueImages.push({ name: `Catálogo: ${c.name}`, url: c.image });
+                }
+            });
+
+            const renderOptions = (images) => {
+                return `<option value="">-- Seleccionar imagen existente --</option>` + 
+                    images.map(i => {
+                        const shortUrl = i.url.startsWith('http') 
+                            ? i.url.replace(/^https?:\/\//, '').slice(0, 35) + '...'
+                            : i.url;
+                        return `<option value="${i.url}">[${i.name}] - ${shortUrl}</option>`;
+                    }).join('');
+            };
+
             const catSelect = document.getElementById('cat-image-select');
-            catSelect.innerHTML = `<option value="">-- Seleccionar imagen existente --</option>` + 
-                uniqueImages.map(i => `<option value="${i.url}">[${i.name}] - ${i.url.slice(-30)}</option>`).join('');
+            catSelect.innerHTML = renderOptions(uniqueImages);
 
             const prodSelect = document.getElementById('prod-image-select');
-            prodSelect.innerHTML = `<option value="">-- Seleccionar imagen existente --</option>` + 
-                uniqueImages.map(i => `<option value="${i.url}">[${i.name}] - ${i.url.slice(-30)}</option>`).join('');
+            prodSelect.innerHTML = renderOptions(uniqueImages);
         }
 
         function renderCategories() {
@@ -569,8 +586,12 @@
             const catPreview = document.getElementById('cat-image-preview');
 
             catSelect.value = currentCatImageUrl;
-            catPreview.src = currentCatImageUrl;
-            catPreview.classList.remove('hidden');
+            if (currentCatImageUrl) {
+                catPreview.src = currentCatImageUrl;
+                catPreview.classList.remove('hidden');
+            } else {
+                catPreview.classList.add('hidden');
+            }
 
             document.getElementById('cat-modal-title').textContent = c ? 'Editar Catálogo' : 'Crear Nuevo Catálogo';
 
@@ -595,8 +616,12 @@
             const prodPreview = document.getElementById('image-preview');
 
             prodSelect.value = currentProdImageUrl;
-            prodPreview.src = currentProdImageUrl;
-            prodPreview.classList.remove('hidden');
+            if (currentProdImageUrl) {
+                prodPreview.src = currentProdImageUrl;
+                prodPreview.classList.remove('hidden');
+            } else {
+                prodPreview.classList.add('hidden');
+            }
 
             document.getElementById('editor-content').innerHTML = p ? (p.desc || p.shortDesc || '') : '';
             document.getElementById('modal-title').textContent = p ? 'Editar Producto' : 'Nuevo Producto';
