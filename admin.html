@@ -34,6 +34,8 @@
             }
         }
     </script>
+    <!-- Carga del JS global sin tipo module -->
+    <script src="assets/app.js"></script>
 </head>
 <body class="font-sans text-brand-text bg-brand-beige min-h-screen flex flex-col justify-between">
 
@@ -193,13 +195,11 @@
             uploadImageToStorage, saveProductToFirebase, deleteProductFromFirebase,
             saveCategoryToFirebase, deleteCategoryFromFirebase
         } from './assets/products.js';
-        
-        import { isAdminLoggedIn, logoutAdmin, getCart, removeFromCart, clearCart, showToast } from './assets/app.js';
 
         let selectedFile = null;
 
         document.addEventListener('DOMContentLoaded', async () => {
-            if (!isAdminLoggedIn()) {
+            if (!window.isAdminLoggedIn()) {
                 alert('Acceso no autorizado.');
                 window.location.href = 'index.html';
                 return;
@@ -239,7 +239,7 @@
                     if (confirm('¿Eliminar este catálogo de Firebase?')) {
                         await deleteCategoryFromFirebase(id);
                         renderAll();
-                        showToast('Catálogo eliminado');
+                        window.showToast('Catálogo eliminado');
                     }
                 };
             });
@@ -274,7 +274,7 @@
                     if (confirm('¿Eliminar producto de Firebase?')) {
                         await deleteProductFromFirebase(id);
                         renderAll();
-                        showToast('Producto eliminado.');
+                        window.showToast('Producto eliminado.');
                     }
                 };
             });
@@ -282,7 +282,7 @@
 
         function renderCart() {
             const container = document.getElementById('admin-cart-list');
-            const cart = getCart();
+            const cart = window.getCart ? window.getCart() : [];
 
             if (!cart || cart.length === 0) {
                 container.innerHTML = `<p class="text-xs text-brand-subtext italic">El carrito está vacío.</p>`;
@@ -301,15 +301,18 @@
 
             document.querySelectorAll('.btn-del-cart').forEach(btn => {
                 btn.onclick = () => {
-                    removeFromCart(btn.getAttribute('data-cartid'));
+                    if (window.removeFromCart) window.removeFromCart(btn.getAttribute('data-cartid'));
                     renderCart();
                 };
             });
         }
 
         function setupEventListeners() {
-            document.getElementById('btn-logout').onclick = logoutAdmin;
-            document.getElementById('btn-clear-cart').onclick = () => { clearCart(); renderCart(); };
+            document.getElementById('btn-logout').onclick = () => window.logoutAdmin();
+            document.getElementById('btn-clear-cart').onclick = () => { 
+                if (window.clearCart) window.clearCart(); 
+                renderCart(); 
+            };
 
             // Modales
             document.getElementById('btn-open-cat-modal').onclick = () => {
@@ -333,7 +336,7 @@
                 await saveCategoryToFirebase({ id: id, name: name });
                 closeCat();
                 renderAll();
-                showToast('Catálogo subido a Firebase');
+                window.showToast('Catálogo subido a Firebase');
             };
 
             document.getElementById('btn-open-prod-modal').onclick = () => openEditModal(null);
@@ -393,7 +396,7 @@
                     await saveProductToFirebase(newProd);
                     closeProd();
                     renderAll();
-                    showToast('¡Producto guardado en la nube!');
+                    window.showToast('¡Producto guardado en la nube!');
                 } catch (err) {
                     alert('Error al guardar en Firebase: ' + err.message);
                 } finally {
